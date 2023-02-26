@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mesto</title>
+    <link rel="stylesheet" href="./vendor/normalize.css">
+    <link rel="stylesheet" href="./index.css">
+</head>
+<body class="page">
+    <header class="header">
+        <img class="header__logo" src="./image/logo.png" alt="Логотип">
+        <div class="header__line"></div>
+    </header>
+
+    <main class="content">
+        <section class="profile">
+            <div class="profile__info">
+                <img src="./image/profile__image.jpg" alt="Фото профиля" class="profile__image">
+                
+                <div class="profile__texts">
+                    <div class="profile__titles">
+                        <h1 class="profile__title">Жак-Ив Кусто</h1>
+                        <button class="profile__edit-button">
+                            <img src="./image/profile__edit-button.svg">    
+                        </button>
+                    </div>
+                    <p class="profile__text">Исследователь океана</p>
+                </div>
+
+            </div>
+            <div class="profile__add-button">
+                <img class="profile__add-button-image" src="./image/profile__add-button.svg">
+            </div>
+        </section>
+
+        <section class="elements">
+            <ul class="group">
+                <li class="element">
+                    <img src="./image/elem__img_Karac.jpg" alt="город Карачаевск" class="element__image">
+                    <div class="element__texts">
+                        <p class="element__text">Kарачаевск</p>
+                        <div class="element__vector"></div>
+                    </div>
+                </li>
+
+                <li class="element">
+                    <img src="./image/elem__img_elbrus.jpg" alt="гора Эльбрус" class="element__image">
+                    <div class="element__texts">
+                    <p class="element__text">Гора Эльбрус</p>
+                    <div class="element__vector"></div>
+                    </div>
+                </li>
+
+                <li class="element">
+                    <img src="./image/elem__img_Dombai.jpg" alt="город Домбай" class="element__image">
+                    <div class="element__texts">
+                        <p class="element__text">Домбай</p>
+                        <div class="element__vector"></div>
+                    </div>
+                </li>
+
+                <li class="element">
+                    <img src="./image/elem__img_elbrus.jpg" alt="гора Эльбрус" class="element__image">
+                    <div class="element__texts">
+                        <p class="element__text">Гора Эльбрус</p>
+                        <div class="element__vector"></div>
+                    </div>
+                </li>
+
+                <li class="element">
+                    <img src="./image/elem__img_Dombai.jpg" alt="город Домбай" class="element__image">
+                        <div class="element__texts">
+                        <p class="element__text">Домбай</p>
+                        <div class="element__vector"></div>
+                    </div>
+                </li>
+
+                <li class="element">
+                    <img src="./image/elem__img_Karac.jpg" alt="город Карачаевск" class="element__image">
+                    <div class="element__texts">
+                        <p class="element__text">Kарачаево-Черкессия</p>
+                        <div class="element__vector"></div>
+                    </div>
+                </li>
+            </ul>
+        </section>
+    </main>
+    <footer class="footer">
+        <p class="footer__copyright">© 2020 Mesto Russia</p>
+    </footer>
+        <section class="popup">
+            <div class="popup__container">
+                <button class="popup__close">
+                </button>
+                <h2 class="popup__header">Редактировать профиль</h2>
+                    <form class="form">
+                        <input class="popup__field-name" type="text" value="Жак-Ив Кусто">
+                        <input class="popup__field-description" type="text" value="Исследователь океана">
+                        <button class="popup__save">Сохранить</button>
+                    </form>
+            </div>
+            
+        </section>
+    <script src="./index.js"></script>
+</body>
+</html>
