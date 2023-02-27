@@ -16,7 +16,6 @@ function handleCloseButtonClick() {
 }
 
 function handleOverlyClick(event) {
-    console.log(event);
     if(event.target === event.currentTarget) {
     toggleOpenPopup();
 }
@@ -32,9 +31,6 @@ let fieldNameInput = formElement.querySelector('.popup__field-name');//Поле 
 let fieldDescriptionInput = formElement.querySelector('.popup__field-description');//поле для описания
 let ProfileTitle = document.querySelector('.profile__title');//Имя, отображаемое на странице
 let ProfileText = document.querySelector('.profile__text');// Описание на странице
-
-
-console.log('ПРОВЕРКА:', ProfileText.textContent);
 
 function handleFormSubmit (evt) {
     evt.preventDefault(); 

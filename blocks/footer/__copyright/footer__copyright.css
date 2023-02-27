@@ -13,16 +13,16 @@
     .footer__copyright {
         padding-top: 0px;
         padding-bottom: 60px;
-      }
-      }
+    }
+    }
 @media screen and (max-width: 930px) {
     .footer__copyright {
         font-weight: 400;
         line-height: 17px;
-        }
-        }
+    }
+    }
 @media screen and (max-width: 540px) {
     .footer__copyright {
         font-size: 14px;
-        }
-        }
+    }
+    }
