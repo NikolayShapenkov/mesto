@@ -10,7 +10,7 @@
 }
 @media screen and (max-width: 540px) {
     .profile__texts {
-        margin-top: 26px; 
+        margin-top: 26px;
         max-height: 54px;
         padding-left: 0;
         }
