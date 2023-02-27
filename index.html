@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mesto</title>
     <link rel="stylesheet" href="./vendor/normalize.css">
-    <link rel="stylesheet" href="./index.css">
+    <link rel="stylesheet" href="./pages/index.css">
 </head>
 <body class="page">
     <header class="header">
@@ -95,10 +95,10 @@
                 <button class="popup__close">
                 </button>
                 <h2 class="popup__header">Редактировать профиль</h2>
-                    <form class="form">
-                        <input class="popup__field-name" type="text" value="Жак-Ив Кусто">
-                        <input class="popup__field-description" type="text" value="Исследователь океана">
-                        <button class="popup__save">Сохранить</button>
+                    <form class="popup__form">
+                        <input class="popup__field-name" type="text" name="firstname" placeholder="Жак-Ив Кусто" value="Жак-Ив Кусто">
+                        <input class="popup__field-description" type="text" name="description" placeholder="Исследователь океана" value="Исследователь океана">
+                        <button type="submit" class="popup__save">Сохранить</button>
                     </form>
             </div>
             

@@ -1,0 +1,19 @@
+.popup__field-description {
+    margin-top: 33px;
+    margin-left: 28px;
+    margin: 33px 44px 0 28px;
+    max-height: 14px;
+    padding-bottom: 13px;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, .2);
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+}
+@media screen and (max-width: 540px) {
+    .popup__field-description {
+        margin: 30px 22px 0 22px;
+        }
+        } 
