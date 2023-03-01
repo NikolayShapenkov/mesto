@@ -1,9 +1,9 @@
-.form__profile-info {
+.popup__profile-info {
   border: none;
   padding: 45px 36px 0 36px;
 }
 @media screen and (max-width: 540px) {
-  .form__profile-info {
+  .popup__profile-info {
     padding: 75px 22px 0 22px;
   }
 }

@@ -42,4 +42,4 @@
 @import url(../blocks/popup/__field/_type/_name/popup__field_type_name.css);
 @import url(../blocks/popup/__field/_type/_description/popup__field_type_description.css);
 @import url(../blocks/popup/__save/popup__save.css);
-@import url(../blocks/form/__profile-info/form__profile-info.css);
+@import url(../blocks/popup/__profile-info/popup__profile-info.css);
