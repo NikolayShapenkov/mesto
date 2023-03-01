@@ -1,15 +1,15 @@
 .profile__titles {
-    display: flex;
-    padding-bottom: 14px;
-    column-gap: 18px;
+  display: flex;
+  padding-bottom: 14px;
+  column-gap: 18px;
 }
 @media screen and (max-width: 540px) {
-    .profile__titles {
-        column-gap: 10px;
-        }
-        } 
+  .profile__titles {
+    column-gap: 10px;
+  }
+}
 @media screen and (max-width: 420px) {
-    .profile__titles {
-        margin-left: 46px;
-        }
-        } 
+  .profile__titles {
+    margin-left: 46px;
+  }
+}

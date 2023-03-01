@@ -1,0 +1,9 @@
+.profile__image-container {
+  width: 120px;
+  height: 120px;
+  background-image: url(../../../image/profile__image.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  border-radius: 50%;
+}

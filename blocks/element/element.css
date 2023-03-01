@@ -1,19 +1,8 @@
 .element {
-    border-radius: 10px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    background-color: white;
-    color: #000000;
-    max-height: 361px;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  color: #000000;
 }
-@media screen and (max-width: 930px) {
-    .element {
-        max-height: none;
-        }
-        } 
-@media screen and (max-width: 340px) {
-    .element {
-        max-height: 361px;
-        }
-        } 
