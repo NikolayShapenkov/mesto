@@ -1,10 +1,12 @@
 .content {
-    /*border: 1px solid red;*/
+  /*border: 1px solid red;*/
 }
 @media screen and (max-width: 930px) {
-    .content {
-        margin: 40px 0 50px 0;
-        padding-left: 19px;
-        padding-right: 19px;
-      }
-      }
+  .content {
+    margin: 0 0 50px 0;
+    padding-left: 19px;
+    padding-right: 19px;
+
+    flex: 1;
+  }
+}

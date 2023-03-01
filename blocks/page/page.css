@@ -1,7 +1,11 @@
 .page {
-    background-color: #000000;
-    max-width: 880px;
-    color: white;
-    margin: 0 auto;
-    font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  background-color: #000000;
+  max-width: 880px;
+  color: white;
+  margin: 0 auto;
+  font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
+
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }

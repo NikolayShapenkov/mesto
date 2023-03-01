@@ -10,6 +10,8 @@
 }
 @media screen and (max-width: 420px) {
   .profile__titles {
-    margin-left: 46px;
+    padding-left: 28px;
+    padding-bottom: 6px;
+    margin: 0 auto;
   }
 }

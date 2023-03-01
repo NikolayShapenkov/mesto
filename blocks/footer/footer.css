@@ -1,6 +1,8 @@
 @media screen and (max-width: 930px) {
-    .footer {
+  .footer {
     padding-left: 19px;
     padding-right: 19px;
-    }
-    }
+
+    flex-shrink: 0;
+  }
+}
