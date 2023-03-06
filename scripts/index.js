@@ -5,16 +5,16 @@ const closeButton = popup.querySelector('.popup__close');
 let formElement = popup.querySelector('.popup__form');//форма
 let fieldNameInput = formElement.querySelector('.popup__field_type_name');//Поле для имени
 let fieldDescriptionInput = formElement.querySelector('.popup__field_type_description');//поле для описания
-let ProfileTitle = document.querySelector('.profile__title');//Имя, отображаемое на странице
-let ProfileText = document.querySelector('.profile__text');// Описание на странице
+let profileTitle = document.querySelector('.profile__title');//Имя, отображаемое на странице
+let profileText = document.querySelector('.profile__text');// Описание на странице
 
 function toggleOpenPopup() {
     popup.classList.toggle('popup_opened');
 }
 
 function handleAboutButtonClick() {
-    fieldNameInput.value = ProfileTitle.textContent;//заполняем поле имени данными со страницы
-    fieldDescriptionInput.value = ProfileText.textContent;//заполняем поле описания данными со страницы
+    fieldNameInput.value = profileTitle.textContent;//заполняем поле имени данными со страницы
+    fieldDescriptionInput.value = profileText.textContent;//заполняем поле описания данными со страницы
     toggleOpenPopup();
 }
 
@@ -25,15 +25,15 @@ function handleAboutButtonClick() {
 }*/
 
 aboutButton.addEventListener('click', handleAboutButtonClick);
-closeButton.addEventListener('click', handleAboutButtonClick);
+closeButton.addEventListener('click', toggleOpenPopup);
 /*popup.addEventListener('click', handleOverlyClick);*/
 
 function handleFormSubmit (evt) {
     evt.preventDefault(); 
 
-    ProfileTitle.textContent = fieldNameInput.value;//заполняем имя на странице данными из поля имени
-    ProfileText.textContent = fieldDescriptionInput.value;//заполняем Описание на странице данными из поля описания
-    
+    profileTitle.textContent = fieldNameInput.value;//заполняем имя на странице данными из поля имени
+    profileText.textContent = fieldDescriptionInput.value;//заполняем Описание на странице данными из поля описания
+
     toggleOpenPopup();
 }
 
