@@ -1,5 +1,5 @@
 .profile__image {
-  object-fit: contain;
+  object-fit: cover; /*огромное спасибо за ревью!)*/
   width: 100%;
   height: 100%;
 }
