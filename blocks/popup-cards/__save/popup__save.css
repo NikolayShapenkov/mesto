@@ -1,0 +1,26 @@
+.popup-cards__save {
+  margin: 50px 36px 37px 36px;
+  min-height: 50px;
+  border-radius: 2px;
+  background-color: #000000;
+  color: #fff;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  padding: 0;
+  border: none;
+}
+@media screen and (max-width: 540px) {
+  .popup-cards__save {
+    margin: 45px 22px 25px 22px;
+    min-height: 46px;
+    font-size: 14px;
+    line-height: 17px;
+  }
+}
+
+.popup-cards__save:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}

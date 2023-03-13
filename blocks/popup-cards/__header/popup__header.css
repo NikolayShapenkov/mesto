@@ -1,0 +1,17 @@
+.popup-cards__header {
+  color: #000000;
+  padding-top: 34px;
+  padding-left: 36px;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 29px;
+  margin: 0;
+}
+@media screen and (max-width: 540px) {
+  .popup-cards__header {
+    padding: 25px 22px 0 22px;
+    font-size: 18px;
+    line-height: 22px;
+  }
+}

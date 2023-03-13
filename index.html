@@ -7,7 +7,7 @@
   <title>Mesto</title>
   <link rel="stylesheet" href="./pages/index.css">
 </head>
-<body class="page">
+<body class="page preload">
   <header class="header">
     <img class="header__logo" src="./image/logo.svg" alt="Логотип">
     </header>
@@ -115,6 +115,33 @@
         </form>
       </div>      
     </div>
+
+    <div class="popup-cards">
+      <div class="popup-cards__container">
+        <button class="popup-cards__close" type="button">
+        </button>
+        <h2 class="popup-cards__header">Новое место</h2>
+        <form class="popup-cards__form" name="data-changing">
+          <fieldset class="popup-cards__profile-info">
+            <input class="popup-cards__field popup-cards__field_type_name" type="text" name="place-name" placeholder="Название"
+              value="">
+            <input class="popup-cards__field popup-cards__field_type_description" type="text" name="place-link"
+              placeholder="Ссылка на картинку" value="">
+          </fieldset>
+          <button type="submit" class="popup-cards__save">Создать</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="popup-image">
+      <div class="popup-image__container">
+        <button class="popup-image__close" type="button">
+        </button>
+        <img src="./image/Image.png" alt="" class="popup-image__picture">
+        <p class="popup-image__text">Карачаево-Черкессия</p>
+      </div>
+    </div>
+
 <script src="./scripts/index.js"></script>
 </body>
 </html>

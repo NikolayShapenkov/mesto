@@ -1,3 +1,4 @@
+const page = document.querySelector('.page');//ищу элемент с классом preload, отвечающий за отключение transition при загрузке страницы (класс добавлен, чтобы попап не высвечивался на доли секунд при загрузке страницы)
 const aboutButton = document.querySelector('.profile__edit-button');
 const popup = document.querySelector('.popup');
 const closeButton = popup.querySelector('.popup__close');
@@ -8,8 +9,12 @@ let fieldDescriptionInput = formElement.querySelector('.popup__field_type_descri
 let profileTitle = document.querySelector('.profile__title');//Имя, отображаемое на странице
 let profileText = document.querySelector('.profile__text');// Описание на странице
 
+window.addEventListener('load', function() {
+  page.classList.remove('preload');  
+});// удаляю класс preload после полной загрузки страницы, чтобы анимация всплывающих попапов работала
+
 function toggleOpenPopup() {
-    popup.classList.toggle('popup_opened');
+    popup.classList.toggle('popup_opened');//переключаем класс popup_opened
 }
 
 function handleAboutButtonClick() {
@@ -38,5 +43,6 @@ function handleFormSubmit (evt) {
 }
 
 formElement.addEventListener('submit', handleFormSubmit);
+
 
 

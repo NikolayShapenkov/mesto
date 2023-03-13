@@ -1,0 +1,4 @@
+.popup-cards__form {
+  display: flex;
+  flex-direction: column;
+}
