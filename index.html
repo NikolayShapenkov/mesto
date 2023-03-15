@@ -34,7 +34,9 @@
 
       <section class="elements">
         <ul class="elements__group">
+
           <li class="element">
+            <img src="./image/Trash.svg" alt="Кнопка для удаления" class="element__delete">
             <div class="element__image-container">
               <img src="./image/elem__img_Karac.jpg" alt="город Карачаевск" class="element__image">
             </div>
@@ -93,6 +95,20 @@
               <button class="element__vector" type="button"></button>
             </div>
           </li>
+
+          <template class="element__template">
+            <li class="element">
+              <img src="./image/Trash.svg" alt="Кнопка для удаления" class="element__delete">
+              <div class="element__image-container">
+                <img src="./image/elem__img_Karac.jpg" alt="Картинка, вставленная пользователем" class="element__image">
+              </div>
+              <div class="element__texts">
+                <h2 class="element__text">Текст в темплейте</h2>
+                <button class="element__vector" type="button"></button>
+              </div>
+            </li>
+          </template>
+
         </ul>
       </section>
     </main>
@@ -125,7 +141,7 @@
           <fieldset class="popup-cards__profile-info">
             <input class="popup-cards__field popup-cards__field_type_name" type="text" name="place-name" placeholder="Название"
               value="">
-            <input class="popup-cards__field popup-cards__field_type_description" type="text" name="place-link"
+            <input class="popup-cards__field popup-cards__field_type_link" type="text" name="place-link"
               placeholder="Ссылка на картинку" value="">
           </fieldset>
           <button type="submit" class="popup-cards__save">Создать</button>
