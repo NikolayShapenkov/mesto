@@ -13,11 +13,12 @@ window.addEventListener('load', function() {
   page.classList.remove('preload');  
 });// удаляю класс preload после полной загрузки страницы, чтобы анимация всплывающих попапов работала
 
-//Можно я не буду удалять излишние комментарии? Удалю, когда сдам 6ПР, пишу для себя. спасибо)))
+
 //Новые функции для открытия и закрытия попапов
 
 function openPopup(popupClass) {
   popupClass.classList.add('popup_opened');
+  enableValidation();
 };
 
 function closePopup(popupClass) {
@@ -51,7 +52,6 @@ function handleAboutButtonSubmitFormProfile (evt) {
 
   closePopupProfile();
 }
-
 formElement.addEventListener('submit', handleAboutButtonSubmitFormProfile);
 
 // Пятая ПР
@@ -147,3 +147,98 @@ aboutButtonCard.addEventListener('click', openPopupForAddCards);//открыти
 buttonCloseCard.addEventListener('click', closePopupForAddCards);////закрытие попапа для добавления карточек при нажатии на крестик
 formPopupAddCardsElement.addEventListener('submit', handleFormCardSubmit);//Вешаем обработчик на форму (обработка данных из формы при клике на ДОБАВИТЬ)
 buttonCloseImage.addEventListener('click', closePopupLookImage);//закрытие попапа для просмотра фото при нажатии на кнопку
+
+
+
+
+
+//6ПРОЕКТАНАЯ РАБОТА
+
+//массив с данными
+
+/*const formValidationConfig = {
+formSelector: '.popup__form',
+inputSelector: '.popup__field',
+submitButtonSelector: '.popup__save',
+inactiveButtonClass: '.popup__save_invalid',
+inputErrorClass: 'popup__field_type_error',//класс который стилизует неправильное поле ИЗНАЧАЛЬНО ОТКЛЮЧЕН (полоска становится красной)
+errorActiveClass: 'popup__input-error_visible',//класс который делает видимым Спан с ошибкой
+};*/
+
+//Функция принимает в себя любую форму, находит инпуты и вешает на них обработчики
+
+const formNumberOne = document.querySelector('.popup-cards__form');
+const inputNumberOne = formNumberOne.querySelector('.popup-cards__field_type_name');
+const inputNumberToo = formNumberOne.querySelector('.popup-cards__field_type_link');
+
+//Функция, добавляющая класс к элементу, чтобы стилизовать невалидное поле
+const showInputError = (formElement, inputElement, errorMessage) => {
+  const inputErrorContainer = formElement.querySelector(`.${inputElement.id}-error`);// Находим класс спана для конкретного поля
+  inputElement.classList.add('popup__field_type_error');
+  inputErrorContainer.classList.add('popup__input-error_visible');
+  inputErrorContainer.textContent = errorMessage;
+};
+
+//Функция, удаляющая класс у элемента
+const hideInputError = (formElement, inputElement) => {
+  const inputErrorContainer = formElement.querySelector(`.${inputElement.id}-error`);// Находим класс спана для конкретного поля
+  inputElement.classList.remove('popup__field_type_error');
+  inputErrorContainer.classList.remove('popup__input-error_visible');
+  inputErrorContainer.textContent = '';
+};
+
+//функция, проверяющая валидность и удаляющая или добавляющая класс для стилизации невалидного поля
+
+const isValid = (formElement, inputElement) => {
+  if(!inputElement.validity.valid) {
+    showInputError(formElement, inputElement, inputElement.validationMessage);
+  } else {
+    hideInputError(formElement, inputElement);
+  }
+  console.log('функция сработала');
+}
+
+//Функция, принимающая форму и вешающая обработчики
+const setEventListeners = (formElement) => {
+  const inputList = Array.from(formElement.querySelectorAll('.popup__field'));
+  const buttonElement = formElement.querySelector('.popup__save');
+  toggleButtonState(inputList, buttonElement);
+  inputList.forEach(function(inputElement) {
+    inputElement.addEventListener('input', function() {
+      isValid(formElement, inputElement);
+      toggleButtonState(inputList, buttonElement);
+    })
+  });
+};
+
+
+const enableValidation = () => {
+  const formList = Array.from(document.querySelectorAll('.popup__form'));
+  formList.forEach(function(formElement) {
+   setEventListeners(formElement);
+  });
+};
+
+//Функция, пербирающая инпуты формы и выдающая true, если находит невалидное поле.
+const hasInvalidInput = (inputList) => {
+  return inputList.some((inputElement) => {
+  return !inputElement.validity.valid;
+  });
+};
+
+//Функция, которая делает кнопку неактивной
+const toggleButtonState = (inputList, buttonElement) => {
+  // Если есть хотя бы один невалидный инпут
+  if (hasInvalidInput(inputList)) {
+    // сделай кнопку неактивной
+    buttonElement.classList.add('popup__save_invalid');
+    buttonElement.setAttribute('disabled', true);
+  } else {
+    // иначе сделай кнопку активной
+    buttonElement.classList.remove('popup__save_invalid');
+    buttonElement.removeAttribute('disabled', true);
+  }
+}; 
+
+enableValidation();
+

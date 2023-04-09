@@ -54,34 +54,56 @@
       <p class="footer__copyright">© 2020 Mesto Russia</p>
     </footer>
 
+
+
+
     <div class="popup">
       <div class="popup__container">
         <button class="popup__close" type="button">
         </button>
         <h2 class="popup__header">Редактировать профиль</h2>
-        <form class="popup__form" name="data-changing">
+        <form class="popup__form" name="data-changing" novalidate>
           <fieldset class="popup__profile-info">
-            <input class="popup__field popup__field_type_name" type="text" name="firstname" placeholder="Жак-Ив Кусто" value="Жак-Ив Кусто">
-            <input class="popup__field popup__field_type_description" type="text" name="description" placeholder="Исследователь океана" value="Исследователь океана">
+
+            <input id="name-input" class="popup__field popup__field_type_name" type="text" required minlength="2" maxlength="40" name="firstname" placeholder="Жак-Ив Кусто" value="Жак-Ив Кусто">
+            <div class="popup__input-error-container">
+              <span class="name-input-error popup__input-error">Поле для ошибки в первом инпуте</span>
+            </div>
+
+            <input id="description-input" class="popup__field popup__field_type_description" type="text" required minlength="2" maxlength="200" name="description" placeholder="Исследователь океана" value="Исследователь океана">
+            <div class="popup__input-error-container">
+              <span class="description-input-error popup__input-error">Поле для ошибки во втором инпуте</span>
+            </div>
+
           </fieldset>
           <button type="submit" class="popup__save">Сохранить</button>
         </form>
       </div>      
     </div>
 
+
     <div class="popup-cards">
       <div class="popup-cards__container">
         <button class="popup-cards__close" type="button">
         </button>
         <h2 class="popup-cards__header">Новое место</h2>
-        <form class="popup-cards__form" name="data-changing">
+        <form class="popup-cards__form popup__form" name="data-changing" novalidate>
           <fieldset class="popup-cards__profile-info">
-            <input class="popup-cards__field popup-cards__field_type_name" type="text" name="place-name" placeholder="Название"
-              value="">
-            <input class="popup-cards__field popup-cards__field_type_link" type="text" name="place-link"
+
+            <input id="place-name-input" class="popup__field popup-cards__field_type_name" type="text" required minlength="2" maxlength="30" name="place-name" placeholder="Название"
+            value="">
+            <div class="popup__input-error-container">
+              <span class="place-name-input-error popup__input-error">Поле для ошибки в первом инпуте</span>
+            </div>
+
+            <input id="place-link-input" class="popup__field popup-cards__field_type_link" type="url" required name="place-link"
               placeholder="Ссылка на картинку" value="">
+            <div class="popup__input-error-container">
+              <span class="place-link-input-error popup__input-error">Поле для ошибки во втором инпуте</span>
+            </div>
+
           </fieldset>
-          <button type="submit" class="popup-cards__save">Создать</button>
+          <button type="submit" class="popup__save">Создать</button>
         </form>
       </div>
     </div>
