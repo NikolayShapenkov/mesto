@@ -88,9 +88,9 @@ formElementt.addEventListener('submit', handleAboutButtonSubmitFormProfile);
 const aboutButtonCard = document.querySelector('.profile__add-button');//кнопка добавления карточек
 const elementText = document.querySelector('.element__text');//Текст из добавленного темплейта
 const formPopupAddCardsElement = popupAddCard.querySelector('.popup-cards__form');//форма сбора данных для создания новой карточки
-const popupCardFieldNameInput = popupAddCard.querySelector('.popup-cards__field_type_name');//Поле ввода в попапе для добавления карточек с названием
-const popupCardFieldLinkInput = popupAddCard.querySelector('.popup-cards__field_type_link');//Поле ввода в попапе для добавления карточек со ссылкой
-const buttonCloseCard = popupAddCard.querySelector('.popup-cards__close');//кнопка для закрытия попапа для добавления карточек
+const popupCardFieldNameInput = popupAddCard.querySelector('.popup__field_type_name');//Поле ввода в попапе для добавления карточек с названием
+const popupCardFieldLinkInput = popupAddCard.querySelector('.popup__field_type_link');//Поле ввода в попапе для добавления карточек со ссылкой
+const buttonCloseCard = popupAddCard.querySelector('.popup__close');//кнопка для закрытия попапа для добавления карточек
 
 const clickLookImage = document.querySelector('.element__image');//Зона клика (картинка) для просмотра фото
 const popupImagePictures = popupLookCard.querySelector('.popup-image__picture');//Картинка в попапе для просмотра фото

@@ -89,19 +89,17 @@
         <h2 class="popup__header">Новое место</h2>
         <form class="popup__form popup-cards__form" name="data-changing" novalidate>
           <fieldset class="popup-cards__profile-info">
-
-            <input id="place-name-input" class="popup__field popup-cards__field_type_name" type="text" required minlength="2" maxlength="30" name="place-name" placeholder="Название"
+            <input id="place-name-input" class="popup__field popup__field_type_name" type="text" required minlength="2" maxlength="30" name="place-name" placeholder="Название"
             value="">
             <div class="popup__input-error-container">
               <span class="place-name-input-error popup__input-error">Поле для ошибки в первом инпуте</span>
             </div>
 
-            <input id="place-link-input" class="popup__field popup-cards__field_type_link" type="url" required name="place-link"
+            <input id="place-link-input" class="popup__field popup__field_type_link" type="url" required name="place-link"
               placeholder="Ссылка на картинку" value="">
             <div class="popup__input-error-container">
               <span class="place-link-input-error popup__input-error">Поле для ошибки во втором инпуте</span>
             </div>
-
           </fieldset>
           <button type="submit" class="popup__save">Создать</button>
         </form>
