@@ -36,18 +36,19 @@ const setEventListeners = (
 
 //Функция, которая блокирует кнопку, если инпуты имеют нулевые значения
 
-disableButtonIfInputEmpty = (formElement, {inputSelector, submitButtonSelector, inactiveButtonClass}) => {
-  console.log('111');
-const inputList = Array.from(formElement.querySelectorAll(inputSelector));
-const buttonElement = formElement.querySelector(submitButtonSelector);
-inputList.forEach(function (inputElement) {
-  if(inputElement.value === '') {
-    buttonElement.classList.add(inactiveButtonClass);
-    buttonElement.setAttribute("disabled", true);
-  };
-});
-}
-
+disableButtonIfInputEmpty = (
+  formElement,
+  { inputSelector, submitButtonSelector, inactiveButtonClass }
+) => {
+  const inputList = Array.from(formElement.querySelectorAll(inputSelector));
+  const buttonElement = formElement.querySelector(submitButtonSelector);
+  inputList.forEach(function (inputElement) {
+    if (inputElement.value === "") {
+      buttonElement.classList.add(inactiveButtonClass);
+      buttonElement.setAttribute("disabled", true);
+    }
+  });
+};
 
 //Функция, добавляющая класс к элементу, чтобы стилизовать невалидное поле и делающая контейнер с ошибкой видимым
 const showInputError = (
@@ -80,7 +81,6 @@ const hideInputError = (
 
 //функция, проверяющая валидность и удаляющая или добавляющая класс для стилизации невалидного поля
 const isValid = (formElement, inputElement, rest) => {
-  console.log("ВВЕЛ СИМВОЛ");
   if (!inputElement.validity.valid) {
     showInputError(
       formElement,
@@ -117,23 +117,5 @@ const toggleButtonState = (
     buttonElement.removeAttribute("disabled", true);
   }
 };
-
-
-
-
-//Функция, которая блокирует кнопку и убирает красные бордеры, если инпуты имеют нулевые значения
-/*disableButtonIfInputEmpty = (formElement) => {
-  const inputList = Array.from(formElement.querySelectorAll('.popup__field'));
-  const buttonSubmit = formElement.querySelector(".popup__save");
-  toggleButtonState(inputList, buttonSubmit, rest);
-  console.log(formElement)
-  
-  if(fieldNameInput.value === '') {
-    console.log('Сработало');
-    console.log(buttonSubmit);
-  buttonSubmit.classList.add("popup__save_invalid");
-  buttonSubmit.setAttribute("disabled", true);
-};
-};*/
 
 enableValidation(formValidationConfig);

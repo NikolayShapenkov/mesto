@@ -3,12 +3,12 @@ const aboutButton = document.querySelector(".profile__edit-button");
 const popupProfile = document.querySelector(".popup-profile");
 const popupAddCard = document.querySelector(".popup-cards"); //Попап для добавления карточек
 const popupLookCard = document.querySelector(".popup-image"); //Попап для просмотра карточек
-const buttonCloseProfile = popupProfile.querySelector(".popup__close");
-
+const buttonCloseProfilePopup = popupProfile.querySelector(".popup__close");
+//Павел, СПАСИБО ЗА РЕВЬЮ!!!)))
 const elementTemplate = document.querySelector(".element__template").content; //находим темплейт и заносим в переменную его содержимое
 
 const formElementProfile = popupProfile.querySelector(".popup__form"); //форма в попапе редактирования профиля
-const formElementCard = document.querySelector('.popup-cards__form')
+const formElementCard = document.querySelector(".popup-cards__form");
 const fieldNameInput = formElementProfile.querySelector(
   ".popup__field_type_name"
 ); //Поле для имени
@@ -39,8 +39,6 @@ function closePopupProfile() {
 }
 
 function handleAboutButtonClick(event) {
-  console.log(fieldNameInput.value);
-  
   fieldNameInput.value = profileTitle.textContent; //заполняем поле имени данными со страницы
   fieldDescriptionInput.value = profileText.textContent; //заполняем поле описания данными со страницы
   openPopup(popupProfile);
@@ -48,45 +46,24 @@ function handleAboutButtonClick(event) {
 
 function handleOverlyPopupClick(event) {
   if (event.target === event.currentTarget) {
-    console.log('ВЕЗДЕ ОДНА ФУНКЦИЯ');
     closePopup(event.currentTarget);
   }
 }
 
-/*function handleOverlyPopupCardsClick(event) {
-  if (event.target === event.currentTarget) {
-    closePopup(popupAddCard);
-  }
-}
-
-function handleOverlyPopupLookCardsClick(event) {
-  if (event.target === event.currentTarget) {
-    closePopup(popupLookCard);
-  }
-}*/
-
 function handlePopupKeydown(event) {
   if (event.key === "Escape") {
-    closePopup(document.querySelector('.popup_opened'));
-
-    //closePopup(popupProfile);
-    //closePopup(popupAddCard);
-    //closePopup(popupLookCard);
-  };
+    closePopup(document.querySelector(".popup_opened"));
+  }
 }
 
 aboutButton.addEventListener("click", handleAboutButtonClick);
-buttonCloseProfile.addEventListener("click", closePopupProfile);
+buttonCloseProfilePopup.addEventListener("click", closePopupProfile);
 
-const popups = Array.from(document.querySelectorAll('.popup'));
+const popups = Array.from(document.querySelectorAll(".popup"));
 
 popups.forEach((popup) => {
-popup.addEventListener('click', handleOverlyPopupClick);
+  popup.addEventListener("click", handleOverlyPopupClick);
 });
-
-/*popupProfile.addEventListener("click", handleOverlyPopupClick);
-popupAddCard.addEventListener("click", handleOverlyPopupClick);
-popupLookCard.addEventListener("click", handleOverlyPopupClick);*/
 
 function handleAboutButtonSubmitFormProfile(evt) {
   evt.preventDefault();
@@ -124,7 +101,6 @@ const elementsContainer = document.querySelector(".elements__group"); //опре
 
 //Функция для создания карточки и установки слушателей.
 function creatCard(nameCardValue, linkCardValue) {
-
   const elementCard = elementTemplate.querySelector(".element").cloneNode(true); //клонируем карточку из темплейт
   const elementCardImage = elementCard.querySelector(".element__image");
 
