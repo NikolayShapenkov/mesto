@@ -34,6 +34,12 @@ const setEventListeners = (
   });
 };
 
+//Метод, который буду вызывать в функциях, блокирует кнопку
+const disableSubmitButton = (buttonElement, inactiveButtonClass) => {
+  buttonElement.classList.add(inactiveButtonClass);
+  buttonElement.setAttribute("disabled", true);
+};
+
 //Функция, которая блокирует кнопку, если инпуты имеют нулевые значения
 
 disableButtonIfInputEmpty = (
@@ -44,8 +50,7 @@ disableButtonIfInputEmpty = (
   const buttonElement = formElement.querySelector(submitButtonSelector);
   inputList.forEach(function (inputElement) {
     if (inputElement.value === "") {
-      buttonElement.classList.add(inactiveButtonClass);
-      buttonElement.setAttribute("disabled", true);
+      disableSubmitButton(buttonElement, inactiveButtonClass);
     }
   });
 };
@@ -109,8 +114,7 @@ const toggleButtonState = (
   // Если есть хотя бы один невалидный инпут
   if (hasInvalidInput(inputList)) {
     // сделай кнопку неактивной
-    buttonElement.classList.add(inactiveButtonClass);
-    buttonElement.setAttribute("disabled", true);
+    disableSubmitButton(buttonElement, inactiveButtonClass);
   } else {
     // иначе сделай кнопку активной
     buttonElement.classList.remove(inactiveButtonClass);

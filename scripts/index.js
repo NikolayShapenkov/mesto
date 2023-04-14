@@ -158,7 +158,6 @@ function handleFormCardSubmit(evt) {
 //Новая функция для открытия по кнопке добавления
 function openPopupForAddCards() {
   disableButtonIfInputEmpty(formElementCard, formValidationConfig);
-  //disableButtonIfInputEmpty(formElementProfile);
   openPopup(popupAddCard);
 }
 
