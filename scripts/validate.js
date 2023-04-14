@@ -34,25 +34,10 @@ const setEventListeners = (
   });
 };
 
-//Метод, который буду вызывать в функциях, блокирует кнопку
+//Метод, который блокирует кнопку
 const disableSubmitButton = (buttonElement, inactiveButtonClass) => {
   buttonElement.classList.add(inactiveButtonClass);
   buttonElement.setAttribute("disabled", true);
-};
-
-//Функция, которая блокирует кнопку, если инпуты имеют нулевые значения
-
-disableButtonIfInputEmpty = (
-  formElement,
-  { inputSelector, submitButtonSelector, inactiveButtonClass }
-) => {
-  const inputList = Array.from(formElement.querySelectorAll(inputSelector));
-  const buttonElement = formElement.querySelector(submitButtonSelector);
-  inputList.forEach(function (inputElement) {
-    if (inputElement.value === "") {
-      disableSubmitButton(buttonElement, inactiveButtonClass);
-    }
-  });
 };
 
 //Функция, добавляющая класс к элементу, чтобы стилизовать невалидное поле и делающая контейнер с ошибкой видимым
