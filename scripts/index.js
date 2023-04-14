@@ -85,7 +85,7 @@ const aboutButtonCard = document.querySelector(".profile__add-button"); //кно
 const elementText = document.querySelector(".element__text"); //Текст из добавленного темплейта
 const formPopupAddCardsElement =
   popupAddCard.querySelector(".popup-cards__form"); //форма сбора данных для создания новой карточки
-const buttonsubmitPopupCards =
+const buttonSubmitPopupCards =
   formPopupAddCardsElement.querySelector(".popup__save");
 const popupCardFieldNameInput = popupAddCard.querySelector(
   ".popup__field_type_name"
@@ -154,7 +154,7 @@ function handleFormCardSubmit(evt) {
   renderCard(nameCardValue, linkCardValue);
 
   disableSubmitButton(
-    buttonsubmitPopupCards,
+    buttonSubmitPopupCards,
     formValidationConfig.inactiveButtonClass
   );
 
