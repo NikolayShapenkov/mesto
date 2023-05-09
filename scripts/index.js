@@ -4,7 +4,7 @@ const popupProfile = document.querySelector(".popup-profile");
 const popupAddCard = document.querySelector(".popup-cards"); //Попап для добавления карточек
 const popupLookCard = document.querySelector(".popup-image"); //Попап для просмотра карточек
 const buttonCloseProfilePopup = popupProfile.querySelector(".popup__close");
-//Павел, СПАСИБО ЗА РЕВЬЮ!!!)))
+
 const elementTemplate = document.querySelector(".element__template").content; //находим темплейт и заносим в переменную его содержимое
 
 const formElementProfile = popupProfile.querySelector(".popup__form"); //форма в попапе редактирования профиля
@@ -17,6 +17,28 @@ const fieldDescriptionInput = formElementProfile.querySelector(
 ); //поле для описания
 const profileTitle = document.querySelector(".profile__title"); //Имя, отображаемое на странице
 const profileText = document.querySelector(".profile__text"); // Описание на странице
+
+// Пятая ПР
+
+const aboutButtonCard = document.querySelector(".profile__add-button"); //кнопка добавления карточек
+const elementText = document.querySelector(".element__text"); //Текст из добавленного темплейта
+const formPopupAddCardsElement =
+  popupAddCard.querySelector(".popup-cards__form"); //форма сбора данных для создания новой карточки
+const buttonSubmitPopupCards =
+  formPopupAddCardsElement.querySelector(".popup__save");
+const popupCardFieldNameInput = popupAddCard.querySelector(
+  ".popup__field_type_name"
+); //Поле ввода в попапе для добавления карточек с названием
+const popupCardFieldLinkInput = popupAddCard.querySelector(
+  ".popup__field_type_link"
+); //Поле ввода в попапе для добавления карточек со ссылкой
+const buttonCloseCard = popupAddCard.querySelector(".popup__close"); //кнопка для закрытия попапа для добавления карточек
+
+const clickLookImage = document.querySelector(".element__image"); //Зона клика (картинка) для просмотра фото
+const popupImagePictures = popupLookCard.querySelector(".popup-image__picture"); //Картинка в попапе для просмотра фото
+const popupImageText = popupLookCard.querySelector(".popup-image__text"); //Картинка в попапе для просмотра фото
+const buttonCloseImage = popupLookCard.querySelector(".popup-image__close"); //кнопка для закрытия попапа с фото
+const elementsContainer = document.querySelector(".elements__group"); //определяем контейнер, куда будем добавлять карточку
 
 window.addEventListener("load", function () {
   page.classList.remove("preload");
@@ -79,42 +101,23 @@ formElementProfile.addEventListener(
   handleAboutButtonSubmitFormProfile
 );
 
-// Пятая ПР
-
-const aboutButtonCard = document.querySelector(".profile__add-button"); //кнопка добавления карточек
-const elementText = document.querySelector(".element__text"); //Текст из добавленного темплейта
-const formPopupAddCardsElement =
-  popupAddCard.querySelector(".popup-cards__form"); //форма сбора данных для создания новой карточки
-const buttonSubmitPopupCards =
-  formPopupAddCardsElement.querySelector(".popup__save");
-const popupCardFieldNameInput = popupAddCard.querySelector(
-  ".popup__field_type_name"
-); //Поле ввода в попапе для добавления карточек с названием
-const popupCardFieldLinkInput = popupAddCard.querySelector(
-  ".popup__field_type_link"
-); //Поле ввода в попапе для добавления карточек со ссылкой
-const buttonCloseCard = popupAddCard.querySelector(".popup__close"); //кнопка для закрытия попапа для добавления карточек
-
-const clickLookImage = document.querySelector(".element__image"); //Зона клика (картинка) для просмотра фото
-const popupImagePictures = popupLookCard.querySelector(".popup-image__picture"); //Картинка в попапе для просмотра фото
-const popupImageText = popupLookCard.querySelector(".popup-image__text"); //Картинка в попапе для просмотра фото
-const buttonCloseImage = popupLookCard.querySelector(".popup-image__close"); //кнопка для закрытия попапа с фото
-const elementsContainer = document.querySelector(".elements__group"); //определяем контейнер, куда будем добавлять карточку
-
-//Функция для создания карточки и установки слушателей.
+//все ЗАКОММЕНТИРОВАННОЕ Уберу после ревью)
+/*//Функция для создания карточки и установки слушателей.
 function creatCard(nameCardValue, linkCardValue) {
   const elementCard = elementTemplate.querySelector(".element").cloneNode(true); //клонируем карточку из темплейт
-  const elementCardImage = elementCard.querySelector(".element__image");
+  const elementCardImage = elementCard.querySelector(".element__image");//находим картинку в темплейте в клонированном
 
   elementCard.querySelector(".element__text").textContent = nameCardValue; //! Меняем в новой карточке данные, берем их из попапа
   elementCardImage.src = linkCardValue; //! Меняем в новой карточке данные, берем их из попапа
   elementCardImage.alt = nameCardValue; // меняем атрибут alt у тега img
-  //Вешаем обработчик клика на лайк
+
+  //Вешаем обработчик клика на лайк (при клике добавляется класс элементу)
   elementCard
     .querySelector(".element__vector")
     .addEventListener("click", function (evt) {
       evt.target.classList.toggle("element__vector_active");
     });
+
   //Настраиваем удаление карточки при клике на кнопку с урной
   //Вешаем обработчик клика на кнопку удаления
   elementCard
@@ -129,20 +132,102 @@ function creatCard(nameCardValue, linkCardValue) {
   elementCardImage.addEventListener("click", openPopupLookImage); //вешаем обработчик клика на картинку для открытия попапа
 
   return (newElementCard = elementCard);
+}*/
+
+// Создаю класс, который создаёт карточку с текстом и ссылкой на изображение:
+
+class Card {
+  constructor(data, temlateSelector) {
+    this._image = data.link;
+    this._text = data.name;
+    this._selector = temlateSelector;//здесь будет разметка селектора из темплейт
+  }
+
+_getTemplate() {
+  const cloneCard = document.querySelector(this._selector).content.querySelector(".element").cloneNode(true); //клонируем карточку из темплейт
+  return cloneCard;
 }
 
-//функция для вставки возвращенной готовой карточки
+generateNewCard() {
+  this._cloneCard = this._getTemplate();//записываем разметку новой карточки в перем
+  this._setEventListeners();
+  const cloneCardImage = this._cloneCard.querySelector(".element__image");//находим картинку в клоне карты
+  cloneCardImage.src = this._image; // Меняем в новой карточке данные, берем их из свойств класса
+  cloneCardImage.alt = this._text;
+  this._cloneCard.querySelector(".element__text").textContent = this._text; //! Меняем в новой карточке данные, берем их из попапа
+  return this._cloneCard;
+}
+
+_setEventListeners() {
+this._cloneCard.querySelector(".element__vector").addEventListener("click", (evt) => {
+    this._handleClickLike(evt)});
+this._cloneCard
+    .querySelector(".element__delete")
+    .addEventListener("click", () => {
+      this._handleClickButtonDelete()
+    });
+this._cloneCard.querySelector(".element__image").addEventListener("click", (evt) => {
+  this._openPopupLookImage(evt)}); //вешаем обработчик клика на картинку для открытия попапа    
+}
+
+_openPopupLookImage(evt) {
+  openPopup(popupLookCard);
+  popupImageText.textContent = evt.target.alt; //Выводим название места в попап
+  popupImagePictures.src = evt.target.src; //выводим картинку, на которую тапнули
+}
+
+
+_handleClickLike(evt) {   
+  evt.target.classList.toggle("element__vector_active");
+    };
+
+_handleClickButtonDelete() {
+      const elementCardForDelete = this._cloneCard
+        .querySelector(".element__delete")
+        .closest(".element");
+      elementCardForDelete.remove();
+}
+
+}
+
+
+//Функция для перебора массива и созданию карточек и их вставки
+initialCards.forEach((item) => {
+  // Создадим экземпляр карточки
+  const card = new Card(item, ".element__template");
+  // Создаём карточку и возвращаем наружу
+  const cardElement = card.generateNewCard();
+
+  // Добавляем в DOM
+  elementsContainer.prepend(cardElement);
+}); 
+
+// Ноыая Функция для создания карточек и вставки из формы
+function renderCard (nameCardValue, linkCardValue) {
+  const arrayCard = 
+    {name: nameCardValue,
+     link: linkCardValue,
+  };
+  const card = new Card(arrayCard, ".element__template");
+  const cardElement = card.generateNewCard();
+  elementsContainer.prepend(cardElement);
+};
+
+
+
+/*//функция для вставки возвращенной готовой карточки
 function renderCard(nameCardValue, linkCardValue) {
   creatCard(nameCardValue, linkCardValue);
   elementsContainer.prepend(newElementCard); //вставляем на страницу новый блок с карточкой
-}
+}*/
 
-//Нужно занести в переменные данные из массива initialCards и загрузить на страницу
+/*//Нужно занести в переменные данные из массива initialCards и загрузить на страницу
 initialCards.forEach(function (item) {
   const nameCardValue = item.name;
   const linkCardValue = item.link;
   renderCard(nameCardValue, linkCardValue);
-});
+});*/
+
 
 //Обрабатываем данные из формы для создания новых карточек.
 function handleFormCardSubmit(evt) {
@@ -153,10 +238,12 @@ function handleFormCardSubmit(evt) {
 
   renderCard(nameCardValue, linkCardValue);
 
-  disableSubmitButton(
+  formElementCardValidator.disableSubmitButton();
+
+  /*disableSubmitButton(
     buttonSubmitPopupCards,
     formValidationConfig.inactiveButtonClass
-  );
+  );*/
 
   closePopupForAddCards();
   evt.target.reset();
