@@ -3,8 +3,6 @@ import { FormValidator } from './FormValidator.js';
 import { formValidationConfig } from './validate.js';
 import { Card } from './Card.js';
 
-console.log(initialCards);
-
 const page = document.querySelector(".page"); //ищу элемент с классом preload, отвечающий за отключение transition при загрузке страницы (класс добавлен, чтобы попап не высвечивался на доли секунд при загрузке страницы)
 const aboutButton = document.querySelector(".profile__edit-button");
 const popupProfile = document.querySelector(".popup-profile");
