@@ -1,5 +1,5 @@
 // Массив, который нужно добавить в 6 карточек
-const initialCards = [
+export const initialCards = [
   {
     name: "Архыз",
     link: "http://vsegda-pomnim.com/uploads/posts/2022-03/1647067311_32-vsegda-pomnim-com-p-reka-mulmuga-foto-34.jpg",
