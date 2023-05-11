@@ -103,6 +103,39 @@ formElementProfile.addEventListener(
   handleAboutButtonSubmitFormProfile
 );
 
+//Примет в себя готовую карточку и вставит в разметку
+function insertNewCard(newCard) { 
+  elementsContainer.prepend(newCard);
+};
+
+// Примет в себя любой объект и создаст из него новую карточку
+function createnNewCard(object) {
+  // Создадим экземпляр карточки
+  const card = new Card(object, ".element__template");
+  // Создаём карточку и возвращаем наружу
+  const cardElement = card.generateNewCard();
+  insertNewCard(cardElement);
+}
+
+  initialCards.forEach((item) => {
+  createnNewCard(item);
+}); 
+
+// Ноdая Функция для создания карточек и вставки из формы
+function renderCard (nameCardValue, linkCardValue) {
+
+  const arrayCard = 
+    {name: nameCardValue,
+     link: linkCardValue,
+  };
+
+  createnNewCard(arrayCard);
+};
+  
+
+
+
+/*
 //Функция для перебора массива и созданию карточек и их вставки
 initialCards.forEach((item) => {
   // Создадим экземпляр карточки
@@ -121,12 +154,12 @@ function renderCard (nameCardValue, linkCardValue) {
      link: linkCardValue,
   };
 
-  //const card = new Card(arrayCard, ".element__template");
- // const cardElement = card.generateNewCard();
+  const card = new Card(arrayCard, ".element__template");
+  const cardElement = card.generateNewCard();
   
   elementsContainer.prepend(cardElement);
 };
-
+*/
 
 //Обрабатываем данные из формы для создания новых карточек.
 function handleFormCardSubmit(evt) {
