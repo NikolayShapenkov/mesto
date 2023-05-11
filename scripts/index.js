@@ -121,8 +121,8 @@ function renderCard (nameCardValue, linkCardValue) {
      link: linkCardValue,
   };
 
-  const card = new Card(arrayCard, ".element__template");
-  const cardElement = card.generateNewCard();
+  //const card = new Card(arrayCard, ".element__template");
+ // const cardElement = card.generateNewCard();
   
   elementsContainer.prepend(cardElement);
 };

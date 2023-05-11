@@ -26,24 +26,24 @@
     this._inputList = inputList; //Заносим массив инпутов в поле класса
     this._buttonElement = buttonElement; //Заносим кнопку в поле класса
     this._toggleButtonState(); //Запуск метода, который проверяет на валидность поля и меняет статус активности при первом запуске
-    this._inputList.forEach((inputListElement) => {
-      inputListElement.addEventListener("input", () => {
+    this._inputList.forEach((inputElement) => {
+      inputElement.addEventListener("input", () => {
         //проходим по всем инпутам формы и добавляем обработчик событий, который
-        this._isValid(inputListElement); //при вводе каждого символа проверяет на
+        this._isValid(inputElement); //при вводе каждого символа проверяет на
         this._toggleButtonState();
       });
     });
   }
 
-  _isValid(inputListElement) {
-    if (!inputListElement.validity.valid) {
+  _isValid(inputElement) {
+    if (!inputElement.validity.valid) {
       //если valid false(невалидный), то
       this._showInputError(
-        inputListElement,
-        inputListElement.validationMessage
+        inputElement,
+        inputElement.validationMessage
       ); //запускает метод, показывающий невалидность визуально
     } else {
-      this._hideInputError(inputListElement); //
+      this._hideInputError(inputElement); //PLTCM
     }
   }
 
@@ -74,22 +74,30 @@
   }
 
   //Метод, находящий спан элемента вввода, меняющий цвет полоски при невалидности и выводящий текст ошибки
-  _showInputError(inputListElement) {
+  _showInputError(inputElement) {
     const inputErrorContainer = this._formElement.querySelector(
-      `.${inputListElement.id}-error`
+      `.${inputElement.id}-error`
     ); // Находим в форме элемент спан, куда будет выведено сообщение с ошибкой
-    inputListElement.classList.add(this._inputErrorClass); //меняет цвет полоски
+    inputElement.classList.add(this._inputErrorClass); //меняет цвет полоски
     inputErrorContainer.classList.add(this._errorActiveClass); //Делает видимым Спан
-    inputErrorContainer.textContent = inputListElement.validationMessage;
+    inputErrorContainer.textContent = inputElement.validationMessage;
   }
 
   //Метод, находящий спан элемента вввода, меняющий цвет полоски при валидности и скрывающий текст ошибки
-  _hideInputError(inputListElement) {
+  _hideInputError(inputElement) {
     const inputErrorContainer = this._formElement.querySelector(
-      `.${inputListElement.id}-error`
+      `.${inputElement.id}-error`
     ); // Находим класс спана для конкретного поля
-    inputListElement.classList.remove(this._inputErrorClass);
+    inputElement.classList.remove(this._inputErrorClass);
     inputErrorContainer.classList.remove(this._errorActiveClass);
     inputErrorContainer.textContent = "";
   }
+
+  resetValidation() {
+  this._inputList.forEach((input) => {
+    this._hideInputError(input)
+  })
+  this._toggleButtonState();
+} 
+
 }
