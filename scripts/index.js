@@ -70,6 +70,7 @@ function handleAboutButtonClick() {
   openPopup(popupProfile);
 }
 
+
 function handleOverlyPopupClick(event) {
   if (event.target === event.currentTarget) {
     closePopup(event.currentTarget);
