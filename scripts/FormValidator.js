@@ -1,6 +1,6 @@
 //Класс, настраивающий валидацию полей формы
 
-  export class FormValidator {
+export class FormValidator {
   constructor(data, formElement) {
     this._formElement = formElement;
     this._formSelector = data.formSelector;
@@ -38,10 +38,7 @@
   _isValid(inputElement) {
     if (!inputElement.validity.valid) {
       //если valid false(невалидный), то
-      this._showInputError(
-        inputElement,
-        inputElement.validationMessage
-      ); //запускает метод, показывающий невалидность визуально
+      this._showInputError(inputElement, inputElement.validationMessage); //запускает метод, показывающий невалидность визуально
     } else {
       this._hideInputError(inputElement); //PLTCM
     }
@@ -94,10 +91,9 @@
   }
 
   resetValidation() {
-  this._inputList.forEach((input) => {
-    this._hideInputError(input)
-  })
-  this._toggleButtonState();
-} 
-
+    this._inputList.forEach((input) => {
+      this._hideInputError(input);
+    });
+    this._toggleButtonState();
+  }
 }

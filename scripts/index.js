@@ -1,7 +1,7 @@
-import { initialCards } from './cards.js';
-import { FormValidator } from './FormValidator.js';
-import { formValidationConfig } from './validate.js';
-import { Card } from './Card.js';
+import { initialCards } from "./cards.js";
+import { FormValidator } from "./FormValidator.js";
+import { formValidationConfig } from "./validate.js";
+import { Card } from "./Card.js";
 
 const page = document.querySelector(".page"); //ищу элемент с классом preload, отвечающий за отключение transition при загрузке страницы (класс добавлен, чтобы попап не высвечивался на доли секунд при загрузке страницы)
 const aboutButton = document.querySelector(".profile__edit-button");
@@ -38,7 +38,9 @@ const popupCardFieldLinkInput = popupAddCard.querySelector(
 const buttonCloseCard = popupAddCard.querySelector(".popup__close"); //кнопка для закрытия попапа для добавления карточек
 
 const clickLookImage = document.querySelector(".element__image"); //Зона клика (картинка) для просмотра фото
-export const popupImagePictures = popupLookCard.querySelector(".popup-image__picture"); //Картинка в попапе для просмотра фото
+export const popupImagePictures = popupLookCard.querySelector(
+  ".popup-image__picture"
+); //Картинка в попапе для просмотра фото
 export const popupImageText = popupLookCard.querySelector(".popup-image__text"); //Картинка в попапе для просмотра фото
 const buttonCloseImage = popupLookCard.querySelector(".popup-image__close"); //кнопка для закрытия попапа с фото
 const elementsContainer = document.querySelector(".elements__group"); //определяем контейнер, куда будем добавлять карточку
@@ -62,7 +64,7 @@ function closePopupProfile() {
   closePopup(popupProfile);
 }
 
-function handleAboutButtonClick(event) {
+function handleAboutButtonClick() {
   fieldNameInput.value = profileTitle.textContent; //заполняем поле имени данными со страницы
   fieldDescriptionInput.value = profileText.textContent; //заполняем поле описания данными со страницы
   openPopup(popupProfile);
@@ -104,9 +106,9 @@ formElementProfile.addEventListener(
 );
 
 //Примет в себя готовую карточку и вставит в разметку
-function insertNewCard(newCard) { 
+function insertNewCard(newCard) {
   elementsContainer.prepend(newCard);
-};
+}
 
 // Примет в себя любой объект и создаст из него новую карточку
 function createnNewCard(object) {
@@ -117,49 +119,17 @@ function createnNewCard(object) {
   insertNewCard(cardElement);
 }
 
-  initialCards.forEach((item) => {
+//Перебирает массив и для каждого объекта создает карточку и наполняет данными из объекта
+initialCards.forEach((item) => {
   createnNewCard(item);
-}); 
+});
 
-// Ноdая Функция для создания карточек и вставки из формы
-function renderCard (nameCardValue, linkCardValue) {
-
-  const arrayCard = 
-    {name: nameCardValue,
-     link: linkCardValue,
-  };
+// Новая Функция для создания карточек и вставки из формы
+function renderCard(nameCardValue, linkCardValue) {
+  const arrayCard = { name: nameCardValue, link: linkCardValue };
 
   createnNewCard(arrayCard);
-};
-  
-
-
-
-/*
-//Функция для перебора массива и созданию карточек и их вставки
-initialCards.forEach((item) => {
-  // Создадим экземпляр карточки
-  const card = new Card(item, ".element__template");
-  // Создаём карточку и возвращаем наружу
-  const cardElement = card.generateNewCard();
-  // Добавляем в DOM
-  elementsContainer.prepend(cardElement);
-}); 
-
-// Ноыая Функция для создания карточек и вставки из формы
-function renderCard (nameCardValue, linkCardValue) {
-
-  const arrayCard = 
-    {name: nameCardValue,
-     link: linkCardValue,
-  };
-
-  const card = new Card(arrayCard, ".element__template");
-  const cardElement = card.generateNewCard();
-  
-  elementsContainer.prepend(cardElement);
-};
-*/
+}
 
 //Обрабатываем данные из формы для создания новых карточек.
 function handleFormCardSubmit(evt) {
@@ -208,7 +178,6 @@ buttonCloseCard.addEventListener("click", closePopupForAddCards); ////закры
 formPopupAddCardsElement.addEventListener("submit", handleFormCardSubmit); //Вешаем обработчик на форму (обработка данных из формы при клике на ДОБАВИТЬ)
 buttonCloseImage.addEventListener("click", closePopupLookImage); //закрытие попапа для просмотра фото при нажатии на кнопку
 
-
 const formProfilValidator = new FormValidator(
   formValidationConfig,
   formElementProfile
@@ -221,8 +190,34 @@ const formElementCardValidator = new FormValidator(
 ); //создаю экземпляр карда
 formElementCardValidator.enableValidation();
 
-
 //все ЗАКОММЕНТИРОВАННОЕ Уберу после ревью)
+
+/*
+//Функция для перебора массива и созданию карточек и их вставки
+initialCards.forEach((item) => {
+  // Создадим экземпляр карточки
+  const card = new Card(item, ".element__template");
+  // Создаём карточку и возвращаем наружу
+  const cardElement = card.generateNewCard();
+  // Добавляем в DOM
+  elementsContainer.prepend(cardElement);
+}); 
+
+// Ноыая Функция для создания карточек и вставки из формы
+function renderCard (nameCardValue, linkCardValue) {
+
+  const arrayCard = 
+    {name: nameCardValue,
+     link: linkCardValue,
+  };
+
+  const card = new Card(arrayCard, ".element__template");
+  const cardElement = card.generateNewCard();
+  
+  elementsContainer.prepend(cardElement);
+};
+*/
+
 /*//Функция для создания карточки и установки слушателей.
 function creatCard(nameCardValue, linkCardValue) {
   const elementCard = elementTemplate.querySelector(".element").cloneNode(true); //клонируем карточку из темплейт
@@ -254,9 +249,6 @@ function creatCard(nameCardValue, linkCardValue) {
 
   return (newElementCard = elementCard);
 }*/
-
-
-
 
 /*
 // Создаю класс, который создаёт карточку с текстом и ссылкой на изображение:
