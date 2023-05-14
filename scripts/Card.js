@@ -23,6 +23,8 @@ export class Card {
     this._cardCloneElement = this._getTemplate(); //записываем разметку новой карточки в перем
     this._cardImage = this._cardCloneElement.querySelector(".element__image");
     this._buttonLike = this._cardCloneElement.querySelector(".element__vector");
+    this._buttonDeleteCard =
+      this._cardCloneElement.querySelector(".element__delete"); //кнопка для удаления карточки в новой разметке
     this._setEventListeners();
     const cloneCardImage = this._cardImage; //находим картинку в клоне карты
     cloneCardImage.src = this._image; // Меняем в новой карточке данные, берем их из свойств класса
@@ -36,11 +38,9 @@ export class Card {
     this._buttonLike.addEventListener("click", () => {
       this._handleClickLike();
     });
-    this._cardCloneElement
-      .querySelector(".element__delete")
-      .addEventListener("click", () => {
-        this._handleClickButtonDelete();
-      });
+    this._buttonDeleteCard.addEventListener("click", () => {
+      this._handleClickButtonDelete();
+    });
     this._cardImage.addEventListener("click", () => {
       this._openPopupLookImage();
     }); //вешаем обработчик клика на картинку для открытия попапа
@@ -49,6 +49,7 @@ export class Card {
   _openPopupLookImage() {
     popupImageText.textContent = this._text; //Выводим название места в попап
     popupImagePictures.src = this._image; //выводим картинку, на которую тапнули
+    popupImagePictures.alt = this._text; //Добавляем атрибут альт
     openPopup(popupLookCard);
   }
 
@@ -57,9 +58,7 @@ export class Card {
   }
 
   _handleClickButtonDelete() {
-    const elementCardForDelete = this._cardCloneElement
-      .querySelector(".element__delete")
-      .closest(".element");
+    this._buttonDeleteCard.closest(".element");
     this._cardCloneElement.remove();
   }
 }

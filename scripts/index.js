@@ -67,9 +67,9 @@ function closePopupProfile() {
 function handleAboutButtonClick() {
   fieldNameInput.value = profileTitle.textContent; //заполняем поле имени данными со страницы
   fieldDescriptionInput.value = profileText.textContent; //заполняем поле описания данными со страницы
+  formProfilValidator.resetValidation();
   openPopup(popupProfile);
 }
-
 
 function handleOverlyPopupClick(event) {
   if (event.target === event.currentTarget) {
@@ -149,11 +149,12 @@ function handleFormCardSubmit(evt) {
   );*/
 
   closePopupForAddCards();
-  evt.target.reset();
 }
 
 //Новая функция для открытия по кнопке добавления
 function openPopupForAddCards() {
+  formElementCardValidator.resetValidation();
+  formElementCard.reset();
   openPopup(popupAddCard);
 }
 
