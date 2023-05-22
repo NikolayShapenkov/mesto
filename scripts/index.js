@@ -2,6 +2,9 @@ import { initialCards } from "./cards.js";
 import { FormValidator } from "./FormValidator.js";
 import { formValidationConfig } from "./validate.js";
 import { Card } from "./Card.js";
+import { cardListSelector } from "../scripts/utils/constants.js";
+import Section from "../scripts/components/Section.js";
+import Popup from "../scripts/components/Popup.js";
 
 const page = document.querySelector(".page"); //ищу элемент с классом preload, отвечающий за отключение transition при загрузке страницы (класс добавлен, чтобы попап не высвечивался на доли секунд при загрузке страницы)
 const aboutButton = document.querySelector(".profile__edit-button");
@@ -44,54 +47,86 @@ export const popupImagePictures = popupLookCard.querySelector(
 export const popupImageText = popupLookCard.querySelector(".popup-image__text"); //Картинка в попапе для просмотра фото
 const buttonCloseImage = popupLookCard.querySelector(".popup-image__close"); //кнопка для закрытия попапа с фото
 const elementsContainer = document.querySelector(".elements__group"); //определяем контейнер, куда будем добавлять карточку
+const popups = Array.from(document.querySelectorAll(".popup"));
+
 
 window.addEventListener("load", function () {
   page.classList.remove("preload");
 }); // удаляю класс preload после полной загрузки страницы, чтобы анимация всплывающих попапов работала
 
-//Новые функции для открытия и закрытия попапов
+
+//Функция для открытия попапа общая
 export function openPopup(popupElement) {
   popupElement.classList.add("popup_opened");
   document.addEventListener("keydown", handlePopupKeydown);
 }
 
+
+
+//Новая функция для открытия попапа по кнопке добавления карточки
+function openPopupForAddCards() {
+  formElementCard.reset();
+  formElementCardValidator.resetValidation();
+  openPopup(popupAddCard);
+}
+
+
+//Функция для закрытия попапа общая
 function closePopup(popupElement) {
   popupElement.classList.remove("popup_opened");
   document.removeEventListener("keydown", handlePopupKeydown);
 }
 
+/*
+//Функция для закрытия попапа редактир профиля
 function closePopupProfile() {
   closePopup(popupProfile);
 }
+*/
 
-function handleAboutButtonClick() {
-  fieldNameInput.value = profileTitle.textContent; //заполняем поле имени данными со страницы
-  fieldDescriptionInput.value = profileText.textContent; //заполняем поле описания данными со страницы
-  formProfilValidator.resetValidation();
-  openPopup(popupProfile);
+
+//Новая функция для закрытия по кнопке с крестиком
+function closePopupForAddCards() {
+  closePopup(popupAddCard);
 }
 
+
+//Новая функция для закрытия по клику на крестик над картинкой
+function closePopupLookImage() {
+  closePopup(popupLookCard);
+}
+
+// Функция для закрытия попапа при клике на оверлей
 function handleOverlyPopupClick(event) {
   if (event.target === event.currentTarget) {
     closePopup(event.currentTarget);
   }
 }
 
+// Функция, закрывающая попап при клике эскейп
 export function handlePopupKeydown(event) {
   if (event.key === "Escape") {
     closePopup(document.querySelector(".popup_opened"));
+    console.log('Логика закрытия по кнопке Esc НЕ КЛАСС');
   }
 }
 
-aboutButton.addEventListener("click", handleAboutButtonClick);
-buttonCloseProfilePopup.addEventListener("click", closePopupProfile);
 
-const popups = Array.from(document.querySelectorAll(".popup"));
+// Функция для заполнения данных в полях формы при открытии попапа редактир профиля
 
-popups.forEach((popup) => {
-  popup.addEventListener("click", handleOverlyPopupClick);
-});
+const selectorPopupProfile = '.popup-profile';
+const openPopupProfile = new Popup({popupSelector: selectorPopupProfile});
+openPopupProfile.setEventListeners();
 
+function handleAboutButtonClick() {
+  fieldNameInput.value = profileTitle.textContent; //заполняем поле имени данными со страницы
+  fieldDescriptionInput.value = profileText.textContent; //заполняем поле описания данными со страницы
+  formProfilValidator.resetValidation();
+  //openPopup(popupProfile);
+  openPopupProfile.open();
+}
+
+// Функция для заполнения данных на странице из попапа редактир профиля при сабмите
 function handleAboutButtonSubmitFormProfile(evt) {
   evt.preventDefault();
 
@@ -101,12 +136,114 @@ function handleAboutButtonSubmitFormProfile(evt) {
   closePopupProfile();
 }
 
+
+// Новая Функция для создания карточек и вставки из формы
+function renderCard(nameCardValue, linkCardValue) {
+  const arrayCard = [{ name: nameCardValue, link: linkCardValue }];
+
+  const NewCard = new Section(
+    {
+      items: arrayCard,
+      renderer: (item) => {
+        // Создадим экземпляр карточки
+        const card = new Card(item, ".element__template");
+        // Создаём карточку и возвращаем наружу
+        const cardElement = card.generateNewCard();
+        NewCard.addItem(cardElement);
+      },
+    },
+    cardListSelector
+  );
+
+  NewCard.renderCards();
+}
+
+//Обрабатываем данные из формы для создания новых карточек.
+function handleFormCardSubmit(evt) {
+  evt.preventDefault();
+
+  const nameCardValue = popupCardFieldNameInput.value; //заносим в переменную значения данными из поля названия
+  const linkCardValue = popupCardFieldLinkInput.value; //заносим в переменную значения данными из поля сылки
+
+  renderCard(nameCardValue, linkCardValue);
+
+  formElementCardValidator.disableSubmitButton();
+
+  closePopupForAddCards();
+}
+
+// Новый код для создания экземпляра Section
+console.log(initialCards);
+const cardsList = new Section(
+  {
+    items: initialCards,
+    renderer: (item) => {
+      // Создадим экземпляр карточки
+      const card = new Card(item, ".element__template");
+      // Создаём карточку и возвращаем наружу
+      const cardElement = card.generateNewCard();
+      cardsList.addItem(cardElement);
+    },
+  },
+  cardListSelector
+);
+
+cardsList.renderCards();
+
+const formProfilValidator = new FormValidator(
+  formValidationConfig,
+  formElementProfile
+); //создаю экземпляр карда
+formProfilValidator.enableValidation();
+
+const formElementCardValidator = new FormValidator(
+  formValidationConfig,
+  formElementCard
+); //создаю экземпляр карда
+formElementCardValidator.enableValidation();
+
+//Обработчики событий
+aboutButton.addEventListener("click", handleAboutButtonClick);//нажатие кнопки открытия формы редактир проф
+//buttonCloseProfilePopup.addEventListener("click", closePopupProfile);
+
+/*
+//Ко всем попапам закрытие по оверлею
+popups.forEach((popup) => {
+  popup.addEventListener("click", handleOverlyPopupClick);
+});
+*/
+
+//Обработчик при сабмите формы редактир профиля
 formElementProfile.addEventListener(
   "submit",
   handleAboutButtonSubmitFormProfile
 );
 
-//Примет в себя готовую карточку и вставит в разметку
+//открытие попапа для добавления карточек при нажатии на кнопку
+aboutButtonCard.addEventListener("click", openPopupForAddCards); 
+
+
+////закрытие попапа для добавления карточек при нажатии на крестик
+buttonCloseCard.addEventListener("click", closePopupForAddCards); 
+
+
+//Вешаем обработчик на форму (обработка данных из формы при клике на ДОБАВИТЬ)
+formPopupAddCardsElement.addEventListener("submit", handleFormCardSubmit);
+
+
+//закрытие попапа для просмотра фото при нажатии на кнопку
+buttonCloseImage.addEventListener("click", closePopupLookImage);
+
+//все ЗАКОММЕНТИРОВАННОЕ Уберу после ревью)
+
+/*//Новая функция для открытия по клику на картинку
+function openPopupLookImage(evt) {
+  openPopup(popupLookCard);
+  popupImageText.textContent = evt.target.alt; //Выводим название места в попап
+  popupImagePictures.src = evt.target.src; //выводим картинку, на которую тапнули
+}*/
+
+/*// 20.05 Примет в себя готовую карточку и вставит в разметку +
 function insertNewCard(newCard) {
   elementsContainer.prepend(newCard);
 }
@@ -124,75 +261,7 @@ function createnNewCard(object) {
 initialCards.forEach((item) => {
   createnNewCard(item);
 });
-
-// Новая Функция для создания карточек и вставки из формы
-function renderCard(nameCardValue, linkCardValue) {
-  const arrayCard = { name: nameCardValue, link: linkCardValue };
-
-  createnNewCard(arrayCard);
-}
-
-//Обрабатываем данные из формы для создания новых карточек.
-function handleFormCardSubmit(evt) {
-  evt.preventDefault();
-
-  const nameCardValue = popupCardFieldNameInput.value; //заносим в переменную значения данными из поля названия
-  const linkCardValue = popupCardFieldLinkInput.value; //заносим в переменную значения данными из поля сылки
-
-  renderCard(nameCardValue, linkCardValue);
-
-  formElementCardValidator.disableSubmitButton();
-
-  /*disableSubmitButton(
-    buttonSubmitPopupCards,
-    formValidationConfig.inactiveButtonClass
-  );*/
-
-  closePopupForAddCards();
-}
-
-//Новая функция для открытия по кнопке добавления
-function openPopupForAddCards() {
-  formElementCardValidator.resetValidation();
-  formElementCard.reset();
-  openPopup(popupAddCard);
-}
-
-//Новая функция для закрытия по кнопке с крестиком
-function closePopupForAddCards() {
-  closePopup(popupAddCard);
-}
-
-//Новая функция для открытия по клику на картинку
-function openPopupLookImage(evt) {
-  openPopup(popupLookCard);
-  popupImageText.textContent = evt.target.alt; //Выводим название места в попап
-  popupImagePictures.src = evt.target.src; //выводим картинку, на которую тапнули
-}
-
-//Новая функция для закрытия по клику на крестик над картинкой
-function closePopupLookImage() {
-  closePopup(popupLookCard);
-}
-
-aboutButtonCard.addEventListener("click", openPopupForAddCards); //открытие попапа для добавления карточек при нажатии на кнопку
-buttonCloseCard.addEventListener("click", closePopupForAddCards); ////закрытие попапа для добавления карточек при нажатии на крестик
-formPopupAddCardsElement.addEventListener("submit", handleFormCardSubmit); //Вешаем обработчик на форму (обработка данных из формы при клике на ДОБАВИТЬ)
-buttonCloseImage.addEventListener("click", closePopupLookImage); //закрытие попапа для просмотра фото при нажатии на кнопку
-
-const formProfilValidator = new FormValidator(
-  formValidationConfig,
-  formElementProfile
-); //создаю экземпляр карда
-formProfilValidator.enableValidation();
-
-const formElementCardValidator = new FormValidator(
-  formValidationConfig,
-  formElementCard
-); //создаю экземпляр карда
-formElementCardValidator.enableValidation();
-
-//все ЗАКОММЕНТИРОВАННОЕ Уберу после ревью)
+*/
 
 /*
 //Функция для перебора массива и созданию карточек и их вставки
@@ -218,9 +287,9 @@ function renderCard (nameCardValue, linkCardValue) {
   
   elementsContainer.prepend(cardElement);
 };
-*/
 
-/*//Функция для создания карточки и установки слушателей.
+
+//Функция для создания карточки и установки слушателей.
 function creatCard(nameCardValue, linkCardValue) {
   const elementCard = elementTemplate.querySelector(".element").cloneNode(true); //клонируем карточку из темплейт
   const elementCardImage = elementCard.querySelector(".element__image");//находим картинку в темплейте в клонированном
@@ -250,9 +319,9 @@ function creatCard(nameCardValue, linkCardValue) {
   elementCardImage.addEventListener("click", openPopupLookImage); //вешаем обработчик клика на картинку для открытия попапа
 
   return (newElementCard = elementCard);
-}*/
+}
 
-/*
+
 // Создаю класс, который создаёт карточку с текстом и ссылкой на изображение:
 
 class Card {
@@ -307,17 +376,18 @@ _handleClickButtonDelete() {
       elementCardForDelete.remove();
 }
 
-}*/
+}
 
-/*//функция для вставки возвращенной готовой карточки
+//функция для вставки возвращенной готовой карточки
 function renderCard(nameCardValue, linkCardValue) {
   creatCard(nameCardValue, linkCardValue);
   elementsContainer.prepend(newElementCard); //вставляем на страницу новый блок с карточкой
-}*/
+}
 
-/*//Нужно занести в переменные данные из массива initialCards и загрузить на страницу
+//Нужно занести в переменные данные из массива initialCards и загрузить на страницу
 initialCards.forEach(function (item) {
   const nameCardValue = item.name;
   const linkCardValue = item.link;
   renderCard(nameCardValue, linkCardValue);
-});*/
+})
+*/
