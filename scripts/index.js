@@ -9,7 +9,12 @@ import PopupWithImage from "../scripts/components/PopupWithImage.js";
 import { selectorPopupProfile } from "../scripts/utils/constants.js";
 import { selectorPopupImage } from "../scripts/utils/constants.js";
 import PopupWithForm from "./components/PopupWithForm.js";
-import { selectorPopupAddCards } from "./utils/constants.js";
+import {
+  selectorPopupAddCards,
+  profileDescriptionSelector,
+  profileNameSelector,
+} from "./utils/constants.js";
+import UserInfo from "./components/UserInfo.js";
 
 const page = document.querySelector(".page"); //ищу элемент с классом preload, отвечающий за отключение transition при загрузке страницы (класс добавлен, чтобы попап не высвечивался на доли секунд при загрузке страницы)
 const aboutButton = document.querySelector(".profile__edit-button");
@@ -58,39 +63,39 @@ window.addEventListener("load", function () {
   page.classList.remove("preload");
 }); // удаляю класс preload после полной загрузки страницы, чтобы анимация всплывающих попапов работала
 
-//Cоздаем экземпляр логики попапа для профиля
-const openPopupProfile = new PopupWithForm({ popupSelector: selectorPopupProfile });
-//openPopupProfile.setEventListeners();//вешаем обработчики на все элементы
-
-//ОТКРЫТИЕ Cобытие по кнопке открытия формы изменения данных профиля
-aboutButton.addEventListener("click", () => {
-  fieldNameInput.value = profileTitle.textContent; //заполняем поле имени данными со страницы
-  fieldDescriptionInput.value = profileText.textContent; //заполняем поле описания данными со страницы
-  formProfilValidator.resetValidation();
-  openPopupProfile.open();
-});
-
 //САБМИТ Создаем экземпляр класса PopupWithForm для формы профиля и передаем в нее фуункцию
 const popupProfilCardNew = new PopupWithForm({
   popupSelector: selectorPopupProfile,
   handleSubmitForm: (evt) => {
     evt.preventDefault();
 
-    profileTitle.textContent = fieldNameInput.value; //заполняем имя на странице данными из поля имени
-    profileText.textContent = fieldDescriptionInput.value; //заполняем Описание на странице данными из поля описания
+    const arrayInputValue = popupProfilCardNew._getInputValues(); //при саббмите формируем объект с данными из заполненной формы
 
+    userInfo.setUserInfo(
+      arrayInputValue.firstname,
+      arrayInputValue.description
+    );
+
+    console.log("Сработал setEventListener в PopupWithForm");
     popupProfilCardNew.close();
   },
 });
 
+//ОТКРЫТИЕ Cобытие по кнопке открытия формы изменения данных профиля
+aboutButton.addEventListener("click", () => {
+  userInfo.getUserInfo();
+  userInfo.setUserInfoForInput();
+  formProfilValidator.resetValidation();
+  popupProfilCardNew.open();
+});
+
 popupProfilCardNew.setEventListeners();
 
-
-popupProfilCardNew.test();
-openPopupProfile.test();
-//popupProfilCardNew._getInputValues();
-
-
+//Создаем новый экземпляр класса UserInfo (для работы с вставкой текстов на страницу, со страницы, в форму)
+const userInfo = new UserInfo({
+  profileNameSelector,
+  profileDescriptionSelector,
+});
 
 //Создаем экземпляр класса PopupWithForm для формы добавления карты и передаем в нее фуункцию
 const popupAddCardNew = new PopupWithForm({
@@ -98,10 +103,16 @@ const popupAddCardNew = new PopupWithForm({
   handleSubmitForm: (evt) => {
     evt.preventDefault();
 
-    const nameCardValue = popupCardFieldNameInput.value; //заносим в переменную значения данными из поля названия
-    const linkCardValue = popupCardFieldLinkInput.value; //заносим в переменную значения данными из поля сылки
+    const objectWithNewData = popupAddCardNew._getInputValues();
 
-    renderCard(nameCardValue, linkCardValue);
+    console.log(objectWithNewData);
+
+    renderCard([objectWithNewData]);
+
+    //const nameCardValue = popupCardFieldNameInput.value; //заносим в переменную значения данными из поля названия
+    //const linkCardValue = popupCardFieldLinkInput.value; //заносим в переменную значения данными из поля сылки
+
+    //renderCard(nameCardValue, linkCardValue);
 
     formElementCardValidator.disableSubmitButton();
     //popupProfilCardNew._getInputValues();
@@ -116,9 +127,63 @@ popupAddCardNew.setEventListeners(); //вешаем обработчики на 
 aboutButtonCard.addEventListener("click", (evt) => {
   popupAddCardNew.open();
   formElementCardValidator.resetValidation();
-  //formElementCard.reset();
 });
 
+// Функция для создания карточек и вставки из формы
+function renderCard(arrayAddNewCards) {
+  const NewCard = new Section(
+    {
+      items: arrayAddNewCards,
+      renderer: (item) => {
+        // Создадим экземпляр карточки
+        const card = new Card(item, ".element__template");
+        // Создаём карточку и возвращаем наружу
+        const cardElement = card.generateNewCard();
+        NewCard.addItem(cardElement);
+      },
+    },
+    cardListSelector
+  );
+
+  NewCard.renderCards();
+}
+renderCard(initialCards);
+
+//Экземпляр для валидации формы профиля
+const formProfilValidator = new FormValidator(
+  formValidationConfig,
+  formElementProfile
+);
+formProfilValidator.enableValidation();
+
+//Экземпляр для валидации формы добавления карточек
+const formElementCardValidator = new FormValidator(
+  formValidationConfig,
+  formElementCard
+);
+formElementCardValidator.enableValidation();
+
+/*
+// Новый код для создания экземпляра Section
+const cardsList = new Section(
+  {
+    items: initialCards,
+    renderer: (item) => {
+      // Создадим экземпляр карточки
+      const card = new Card(item, ".element__template");
+      // Создаём карточку и возвращаем наружу
+      const cardElement = card.generateNewCard();
+      cardsList.addItem(cardElement);
+    },
+  },
+  cardListSelector
+);
+
+cardsList.renderCards();
+
+//Создаем второй экзнмпляр Section для приема массива???
+
+/*
 // Новая Функция для создания карточек и вставки из формы
 function renderCard(nameCardValue, linkCardValue) {
   const arrayCard = [{ name: nameCardValue, link: linkCardValue }]; //забираем данные из формы и создаем массив
@@ -139,40 +204,7 @@ function renderCard(nameCardValue, linkCardValue) {
 
   NewCard.renderCards();
 }
-
-// Новый код для создания экземпляра Section
-//console.log(initialCards);
-const cardsList = new Section(
-  {
-    items: initialCards,
-    renderer: (item) => {
-      // Создадим экземпляр карточки
-      const card = new Card(item, ".element__template");
-      // Создаём карточку и возвращаем наружу
-      const cardElement = card.generateNewCard();
-      cardsList.addItem(cardElement);
-    },
-  },
-  cardListSelector
-);
-
-cardsList.renderCards();
-
-const formProfilValidator = new FormValidator(
-  formValidationConfig,
-  formElementProfile
-); //создаю экземпляр карда
-formProfilValidator.enableValidation();
-
-const formElementCardValidator = new FormValidator(
-  formValidationConfig,
-  formElementCard
-); //создаю экземпляр карда
-formElementCardValidator.enableValidation();
-
-
-
-
+*/
 
 //Вешаем обработчик на форму (обработка данных из формы при клике на ДОБАВИТЬ)
 //formPopupAddCardsElement.addEventListener("submit", handleFormCardSubmit);

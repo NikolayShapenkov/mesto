@@ -1,15 +1,38 @@
-export default class PopupWithImage extends Popup {
-    constructor( {popupSelector} ) {
-        super({popupSelector});
-        this.popupImageText = this._popupElement.querySelector('.popup-image__text'); //текст в попапе
-        this.popupImagePictures = this._popupElement.querySelector('.popup-image__picture');//картинка в попапе
+import { fieldNameInput, fieldDescriptionInput } from "../utils/constants.js";
+
+
+export default class UserInfo {
+    constructor( {profileNameSelector, profileDescriptionSelector} ) {
+       this._profileTitle = document.querySelector(profileNameSelector);
+       this._profileText = document.querySelector(profileDescriptionSelector);
+   }
+
+
+    getUserInfo() {
+        const dataUserProfile = {};
+        dataUserProfile.firstName = this._profileTitle.textContent;
+        dataUserProfile.description = this._profileText.textContent;
+        console.log('Создаем массив из данных со страницы в классе UserInfo');
+        this._dataUserProfile = dataUserProfile;
+        console.log(this._dataUserProfile);
+        return dataUserProfile;
+    }
+    
+    test() {
+        console.log();
     }
 
-    open(text, image) {
-      this.popupImageText.textContent = text;
-      this.popupImagePictures.src = image;
-      this.popupImagePictures.alt = text;
-      super.open();
-      console.log('Сработлат доработанный опен в PopupWithImage');
+    setUserInfoForInput() {
+        fieldNameInput.value = this._dataUserProfile.firstName; //заполняем поле имени данными со страницы
+        fieldDescriptionInput.value = this._dataUserProfile.description;
     }
+
+    //Принимает новые данные пользователя (объект) и добавляет их на страницу при сабмите
+    setUserInfo(firtname, description) {
+        console.log('РАБОТАЕТ?');
+        this._profileTitle.textContent = firtname; //заполняем имя на странице данными из поля имени
+        this._profileText.textContent = description; //заполняем Описание на странице данными из поля описания
+    }
+
 }
+
