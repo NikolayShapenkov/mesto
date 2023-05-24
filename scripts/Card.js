@@ -1,8 +1,9 @@
 import { popupLookCard } from "./index.js";
 import { popupImageText } from "./index.js";
 import { popupImagePictures } from "./index.js";
-//import { handlePopupKeydown } from './index.js';
-import { openPopup } from "./index.js";
+import { selectorPopupImage } from "./utils/constants.js";
+import Popup from "./components/Popup.js";
+import PopupWithImage from "./components/PopupWithImage.js";
 
 export class Card {
   constructor(data, temlateSelector) {
@@ -42,16 +43,35 @@ export class Card {
       this._handleClickButtonDelete();
     });
     this._cardImage.addEventListener("click", () => {
-      this._openPopupLookImage();
+      //this._openPopupLookImage();//???
+       this.handleCardClick();
+      //popupImage.open();
     }); //вешаем обработчик клика на картинку для открытия попапа
   }
 
-  _openPopupLookImage() {
+  // Метод, открывающий карточку на весь экран
+ /* _openPopupLookImage() {
     popupImageText.textContent = this._text; //Выводим название места в попап
     popupImagePictures.src = this._image; //выводим картинку, на которую тапнули
     popupImagePictures.alt = this._text; //Добавляем атрибут альт
-    openPopup(popupLookCard);
+    //openPopup(popupLookCard);
+    //popupImage.open();
+    const popupImage = new PopupWithImage( {popupSelector: selectorPopupImage}, this._image, this._text );
+    popupImage.setEventListeners();
+    popupImage.open();
+    popupImage.test();
   }
+  */
+
+  handleCardClick() {
+    const popupImage = new PopupWithImage( {popupSelector: selectorPopupImage}, this._image, this._text );
+    popupImage.setEventListeners();
+    popupImage.open(this._text, this._image);
+  }
+  
+
+
+
 
   _handleClickLike() {
     this._buttonLike.classList.toggle("element__vector_active");
