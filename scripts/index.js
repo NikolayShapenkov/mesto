@@ -1,67 +1,40 @@
-import { initialCards } from "./cards.js";
-import { FormValidator } from "./FormValidator.js";
-import { formValidationConfig } from "./validate.js";
-import { Card } from "./Card.js";
-import { cardListSelector } from "../scripts/utils/constants.js";
-import Section from "../scripts/components/Section.js";
-import Popup from "../scripts/components/Popup.js";
-import PopupWithImage from "../scripts/components/PopupWithImage.js";
-import { selectorPopupProfile } from "../scripts/utils/constants.js";
-import { selectorPopupImage } from "../scripts/utils/constants.js";
-import PopupWithForm from "./components/PopupWithForm.js";
 import {
+  initialCards,
+  formValidationConfig,
   selectorPopupAddCards,
   profileDescriptionSelector,
   profileNameSelector,
+  aboutButton,
+  aboutButtonCard,
+  formElementProfile,
+  formElementCard,
+  page,
+  popupLookCard
 } from "./utils/constants.js";
+import { FormValidator } from "./FormValidator.js";
+import { Card } from "./Card.js";
+import {
+  cardListSelector,
+  selectorPopupProfile,
+  selectorPopupImage,
+} from "../scripts/utils/constants.js";
+import Section from "../scripts/components/Section.js";
+import PopupWithForm from "./components/PopupWithForm.js";
 import UserInfo from "./components/UserInfo.js";
-
-const page = document.querySelector(".page"); //ищу элемент с классом preload, отвечающий за отключение transition при загрузке страницы (класс добавлен, чтобы попап не высвечивался на доли секунд при загрузке страницы)
-const aboutButton = document.querySelector(".profile__edit-button");
-const popupProfile = document.querySelector(".popup-profile");
-const popupAddCard = document.querySelector(".popup-cards"); //Попап для добавления карточек
-export const popupLookCard = document.querySelector(".popup-image"); //Попап для просмотра карточек
-const buttonCloseProfilePopup = popupProfile.querySelector(".popup__close");
-
-const elementTemplate = document.querySelector(".element__template").content; //находим темплейт и заносим в переменную его содержимое
-
-const formElementProfile = popupProfile.querySelector(".popup__form"); //форма в попапе редактирования профиля
-const formElementCard = document.querySelector(".popup-cards__form");
-const fieldNameInput = formElementProfile.querySelector(
-  ".popup__field_type_name"
-); //Поле для имени
-const fieldDescriptionInput = formElementProfile.querySelector(
-  ".popup__field_type_description"
-); //поле для описания
-const profileTitle = document.querySelector(".profile__title"); //Имя, отображаемое на странице
-const profileText = document.querySelector(".profile__text"); // Описание на странице
-
-const aboutButtonCard = document.querySelector(".profile__add-button"); //кнопка добавления карточек
-const elementText = document.querySelector(".element__text"); //Текст из добавленного темплейта
-const formPopupAddCardsElement =
-  popupAddCard.querySelector(".popup-cards__form"); //форма сбора данных для создания новой карточки
-const buttonSubmitPopupCards =
-  formPopupAddCardsElement.querySelector(".popup__save");
-const popupCardFieldNameInput = popupAddCard.querySelector(
-  ".popup__field_type_name"
-); //Поле ввода в попапе для добавления карточек с названием
-const popupCardFieldLinkInput = popupAddCard.querySelector(
-  ".popup__field_type_link"
-); //Поле ввода в попапе для добавления карточек со ссылкой
-const buttonCloseCard = popupAddCard.querySelector(".popup__close"); //кнопка для закрытия попапа для добавления карточек
-
-const clickLookImage = document.querySelector(".element__image"); //Зона клика (картинка) для просмотра фото
-export const popupImagePictures = popupLookCard.querySelector(
-  ".popup-image__picture"
-); //Картинка в попапе для просмотра фото
+import PopupWithImage from "./components/PopupWithImage.js";
 export const popupImageText = popupLookCard.querySelector(".popup-image__text"); //Картинка в попапе для просмотра фото
-const buttonCloseImage = popupLookCard.querySelector(".popup-image__close"); //кнопка для закрытия попапа с фото
-const elementsContainer = document.querySelector(".elements__group"); //определяем контейнер, куда будем добавлять карточку
-const popups = Array.from(document.querySelectorAll(".popup"));
 
 window.addEventListener("load", function () {
   page.classList.remove("preload");
 }); // удаляю класс preload после полной загрузки страницы, чтобы анимация всплывающих попапов работала
+
+//Функция для открытия карты при передаче в класс Card
+const popupImage = new PopupWithImage( {popupSelector: selectorPopupImage} );
+popupImage.setEventListeners();
+
+const handleCardClick = (text, image) => {
+    popupImage.open(text, image);
+  };
 
 //САБМИТ Создаем экземпляр класса PopupWithForm для формы профиля и передаем в нее фуункцию
 const popupProfilCardNew = new PopupWithForm({
@@ -76,7 +49,6 @@ const popupProfilCardNew = new PopupWithForm({
       arrayInputValue.description
     );
 
-    console.log("Сработал setEventListener в PopupWithForm");
     popupProfilCardNew.close();
   },
 });
@@ -102,21 +74,9 @@ const popupAddCardNew = new PopupWithForm({
   popupSelector: selectorPopupAddCards,
   handleSubmitForm: (evt) => {
     evt.preventDefault();
-
     const objectWithNewData = popupAddCardNew._getInputValues();
-
-    console.log(objectWithNewData);
-
     renderCard([objectWithNewData]);
-
-    //const nameCardValue = popupCardFieldNameInput.value; //заносим в переменную значения данными из поля названия
-    //const linkCardValue = popupCardFieldLinkInput.value; //заносим в переменную значения данными из поля сылки
-
-    //renderCard(nameCardValue, linkCardValue);
-
     formElementCardValidator.disableSubmitButton();
-    //popupProfilCardNew._getInputValues();
-    //closePopupForAddCards();
     popupAddCardNew.close();
   },
 });
@@ -136,7 +96,7 @@ function renderCard(arrayAddNewCards) {
       items: arrayAddNewCards,
       renderer: (item) => {
         // Создадим экземпляр карточки
-        const card = new Card(item, ".element__template");
+        const card = new Card(item, ".element__template", handleCardClick);
         // Создаём карточку и возвращаем наружу
         const cardElement = card.generateNewCard();
         NewCard.addItem(cardElement);
@@ -163,6 +123,11 @@ const formElementCardValidator = new FormValidator(
 );
 formElementCardValidator.enableValidation();
 
+
+
+
+
+// УБЕРУ ПОСЛЕ РЕВЬЮ))
 /*
 // Новый код для создания экземпляра Section
 const cardsList = new Section(

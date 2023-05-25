@@ -1,5 +1,4 @@
 import Popup from "./Popup.js";
-const formElementCard = document.querySelector(".popup-cards__form");
 
 export default class PopupWithForm extends Popup {
   constructor({ popupSelector, handleSubmitForm }) {
@@ -14,12 +13,12 @@ export default class PopupWithForm extends Popup {
     super.close();
   }
 
+  //Создаем массив объект из данных полей формы в PopupWithForm
   _getInputValues() {
     const arrayInputValue = {};
     this._inputsList.forEach((input) => {
       arrayInputValue[input.name] = input.value;
     });
-    console.log("Создаем массив объект из данных полей формы в PopupWithForm");
     this._arrayInputValue = arrayInputValue;
     return arrayInputValue;
   }
@@ -30,10 +29,4 @@ export default class PopupWithForm extends Popup {
     });
     super.setEventListeners();
   }
-
-  /*
-  test() {
-    console.log(this._inputsList);
-    //console.log(arrayInputValue);
-  }*/
 }

@@ -1,12 +1,10 @@
 import { fieldNameInput, fieldDescriptionInput } from "../utils/constants.js";
 
-
 export default class UserInfo {
     constructor( {profileNameSelector, profileDescriptionSelector} ) {
        this._profileTitle = document.querySelector(profileNameSelector);
        this._profileText = document.querySelector(profileDescriptionSelector);
    }
-
 
     getUserInfo() {
         const dataUserProfile = {};
