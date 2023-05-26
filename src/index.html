@@ -5,11 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mesto</title>
-    <link rel="stylesheet" href="./pages/index.css" />
   </head>
   <body class="page preload">
     <header class="header">
-      <img class="header__logo" src="./image/logo.svg" alt="Логотип" />
+      <img class="header__logo" src="<%=require('./image/logo.svg')%>" alt="Логотип" />
     </header>
 
     <main class="content">
@@ -17,7 +16,7 @@
         <div class="profile__info">
           <div class="profile__image-container">
             <img
-              src="./image/profile__image.jpg"
+              src="<%=require('./image/profile__image.jpg')%>"
               alt="аватарка"
               class="profile__image"
             />
@@ -33,7 +32,7 @@
         <button class="profile__add-button" type="button">
           <img
             class="profile__add-button-image"
-            src="./image/profile__add-button.svg "
+            src="<%=require('./image/profile__add-button.svg')%>"
             alt="значок кнопки"
           />
         </button>
@@ -44,13 +43,13 @@
           <template class="element__template">
             <li class="element">
               <img
-                src="./image/Trash.svg"
+                src="<%=require('./image/Trash.svg')%>"
                 alt="Кнопка для удаления"
                 class="element__delete"
               />
               <div class="element__image-container">
                 <img
-                  src="./image/elem__img_Karac.jpg"
+                  src="<%=require('./image/elem__img_Karac.jpg')%>"
                   alt="Картинка, вставленная пользователем"
                   class="element__image"
                 />
@@ -165,11 +164,10 @@
       <div class="popup-image__container">
         <button class="popup__close popup-image__close" type="button"></button>
         <div class="popup-image__container-picture">
-          <img src="./image/Image.png" alt="" class="popup-image__picture" />
+          <img src="<%=require('./image/Image.png')%>" alt="" class="popup-image__picture" />
         </div>
         <p class="popup-image__text">Карачаево-Черкессия</p>
       </div>
     </div>
-    <script type="module" src="./scripts/index.js"></script>
   </body>
 </html>

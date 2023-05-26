@@ -1,3 +1,4 @@
+import './index.css'; // добавьте импорт главного файла стилей 
 import {
   initialCards,
   formValidationConfig,
@@ -10,18 +11,18 @@ import {
   formElementCard,
   page,
   popupLookCard
-} from "./utils/constants.js";
-import { FormValidator } from "./FormValidator.js";
-import { Card } from "./Card.js";
+} from "../scripts/utils/constants.js";
+import { FormValidator } from "../scripts/FormValidator.js";
+import { Card } from "../scripts/Card.js";
 import {
   cardListSelector,
   selectorPopupProfile,
   selectorPopupImage,
 } from "../scripts/utils/constants.js";
 import Section from "../scripts/components/Section.js";
-import PopupWithForm from "./components/PopupWithForm.js";
-import UserInfo from "./components/UserInfo.js";
-import PopupWithImage from "./components/PopupWithImage.js";
+import PopupWithForm from "../scripts/components/PopupWithForm.js";
+import UserInfo from "../scripts/components/UserInfo.js";
+import PopupWithImage from "../scripts/components/PopupWithImage.js";
 export const popupImageText = popupLookCard.querySelector(".popup-image__text"); //Картинка в попапе для просмотра фото
 
 window.addEventListener("load", function () {

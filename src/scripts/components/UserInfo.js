@@ -6,11 +6,11 @@ export default class UserInfo {
        this._profileText = document.querySelector(profileDescriptionSelector);
    }
 
+   //Создаем массив из данных со страницы в классе UserInfo
     getUserInfo() {
         const dataUserProfile = {};
         dataUserProfile.firstName = this._profileTitle.textContent;
         dataUserProfile.description = this._profileText.textContent;
-        console.log('Создаем массив из данных со страницы в классе UserInfo');
         this._dataUserProfile = dataUserProfile;
         console.log(this._dataUserProfile);
         return dataUserProfile;
