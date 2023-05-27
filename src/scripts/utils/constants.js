@@ -24,7 +24,7 @@ export const initialCards = [
     link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
   },
   {
-    name: "Спасибо за ревью 😊",
+    name: "РЕВЬЮ 🔥👍🙏😊",
     link: "https://sun9-8.userapi.com/impg/EMFzylI5sO9Upo5jHKxZE9tY7AHA1_zsYjAurg/ke-AXEWeXDQ.jpg?size=1620x2160&quality=96&sign=bcd0f81dfef278f9eb042825ac693c54&type=album",
   },
 ];
