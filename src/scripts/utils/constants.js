@@ -1,3 +1,24 @@
+//export const initialCards = []
+/*
+//Запрос карточек
+  //'https://nomoreparties.co/v1/cohort-66/users/me'
+  fetch('https://mesto.nomoreparties.co/v1/cohort-66/cards', {
+  headers: {
+    authorization: 'b462be91-a64a-47db-8f1b-d1a2e0f5554a'
+  }
+})
+  .then(res => res.json())
+  .then((result) => {
+    const initialCard = [result];
+    console.log('Карточки', initialCard);
+    const initialCards = initialCard;
+    return initialCards;
+  }); 
+*/
+
+export const initialCards = []
+
+/*
 export const initialCards = [
   {
     name: "Архыз",
@@ -28,6 +49,7 @@ export const initialCards = [
     link: "https://sun9-8.userapi.com/impg/EMFzylI5sO9Upo5jHKxZE9tY7AHA1_zsYjAurg/ke-AXEWeXDQ.jpg?size=1620x2160&quality=96&sign=bcd0f81dfef278f9eb042825ac693c54&type=album",
   },
 ];
+*/
 
 //массив с данными для подставки
 export const formValidationConfig = {
@@ -43,6 +65,7 @@ export const cardListSelector = ".elements__group";
 export const selectorPopupProfile = ".popup-profile"; //селектор попапа профиля
 export const selectorPopupImage = ".popup-image";
 export const selectorPopupAddCards = ".popup-cards";
+export const selectorPopupDelete = ".popup-delete";
 export const popupProfile = document.querySelector(".popup-profile");
 export const formElementProfile = popupProfile.querySelector(".popup__form"); //форма в попапе редактирования профиля
 export const fieldNameInput = formElementProfile.querySelector(

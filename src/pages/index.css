@@ -31,6 +31,7 @@
 @import url(../blocks/element/__text/element__text.css);
 @import url(../blocks/element/__image-container/element__image-container.css);
 @import url(../blocks/elements/__group/elements__group.css);
+@import url(../blocks/elements/__like-container/elements__like-container.css);
 
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__copyright/footer__copyright.css);
@@ -70,4 +71,7 @@
 @import url(../blocks/popup-image/__picture/popup-image__picture.css);
 @import url(../blocks/popup-image/__text/popup-image__text.css);
 @import url(../blocks/popup-image/_opened/popup-image_opened.css);
+
+@import url(../blocks/popup-delete/popup-delete.css);
+@import url(../blocks/popup-delete/__header/popup-delete__header.css);
 @import url(../blocks/popup/_opened/popup_opened.css);
