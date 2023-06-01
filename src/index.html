@@ -15,11 +15,15 @@
       <section class="profile">
         <div class="profile__info">
           <div class="profile__image-container">
+
+            <div class="profile__conainer-hover">
+            <!--<img src="<%=require('./image/VectorprofileNew.svg')%>" alt="иконка при наведении" class="profile__hover">-->
             <img
               src="<%=require('./image/profile__image.jpg')%>"
               alt="аватарка"
               class="profile__image"
             />
+            </div>
           </div>
           <div class="profile__texts">
             <div class="profile__titles">
@@ -211,3 +215,20 @@
     </div>
   </body>
 </html>
+
+<div class="popup popup-avatar">
+  <div class="popup__container">
+    <button class="popup__close" type="button"></button>
+    <h2 class="popup__header">Обновить аватар</h2>
+    <form class="popup__form" name="data-changing" novalidate>
+      <fieldset class="popup__profile-info">
+        <input id="name-input" class="popup__field popup__field_type_name" type="text" required minlength="2"
+          maxlength="40" name="name" placeholder="Жак-Ив Кусто" value="Жак-Ив Кусто" />
+        <div class="popup__input-error-container">
+          <span class="name-input-error popup__input-error">Поле для ошибки в первом инпуте</span>
+        </div>
+      </fieldset>
+      <button type="submit" class="popup__save">Сохранить</button>
+    </form>
+  </div>
+</div>

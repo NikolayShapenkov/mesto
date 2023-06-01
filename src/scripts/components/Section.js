@@ -9,9 +9,10 @@ export default class Section {
   //Отрисовка всех элементов
   renderCards() {
     this._initialArray.forEach((item) => {
-      const amount = item.likes.length; //длина массива, переданного с сервера
+      //const amount = item.likes.length; //длина массива, переданного с сервера1
       //console.log(item.owner._id);
-      this._renderer(item, amount);
+      //this._renderer(item, amount);
+      this._renderer(item);
     });
   }
 
