@@ -1,13 +1,12 @@
 export class Card {
-  constructor(
-    {data,
+  constructor({
+    data,
     temlateSelector,
-    handleCardClick,//открытие картинки при клике
-    handleButtonDeleteClick,//удаление по клику
-    handleClickLike,//Функция добавления лайка
-    handleDeleteLike //Функция удаления лайка
-    }
-  ) {
+    handleCardClick, //открытие картинки при клике
+    handleButtonDeleteClick, //удаление по клику
+    handleClickLike, //Функция добавления лайка
+    handleDeleteLike, //Функция удаления лайка
+  }) {
     this.handleDeleteLike = handleDeleteLike;
     this.handleClickLike = handleClickLike;
     this.handleButtonDeleteClick = handleButtonDeleteClick;
@@ -18,7 +17,6 @@ export class Card {
     this.owner_Id = data.owner._id;
     this._id = data._id;
     this._dataLikes = data.likes; //массив с данными о лайках загружаемой карточки
-    //this._resultLikes_Id = result.likes._id;
     this._amount = data.likes.length;
   }
 
@@ -42,15 +40,14 @@ export class Card {
     cloneCardImage.src = this._image; // Меняем в новой карточке данные, берем их из свойств класса
     cloneCardImage.alt = this._text;
     this._cardCloneElement.querySelector(".element__text").textContent =
-    this._text; //! Меняем в новой карточке данные, берем их из попапа
-    //this._likeSpan.textContent = this._amount;
+      this._text; //! Меняем в новой карточке данные, берем их из попапа
     this.counter(this._amount, this._dataLikes);
 
     //Убираем иконки удаления не на своих карточках
     if (this.owner_Id !== "5346a78775339fb359a1af5c") {
       this._buttonDeleteCard.remove();
     }
-    
+
     //Красим лайк, если уже ставили
     this._ifMyLike();
 
@@ -60,7 +57,7 @@ export class Card {
   _setEventListeners() {
     this._buttonLike.addEventListener("click", (evt) => {
       this._handleClickLike(evt);
-      this._handleDeleteLike(evt)
+      this._handleDeleteLike(evt);
     });
     this._buttonDeleteCard.addEventListener("click", () => {
       this.handleButtonDeleteClick(
@@ -68,35 +65,29 @@ export class Card {
         this._buttonDeleteCard,
         this._cardCloneElement
       );
-
-      //this._buttonDeleteCard.addEventListener("click", () => {
-      //this._handleClickButtonDelete();
     });
     this._cardImage.addEventListener("click", () => {
       this.handleCardClick(this._text, this._image);
     }); //вешаем обработчик клика на картинку для открытия попапа
   }
 
-
-   //Если лайка не стоит, сработает этот метод
+  //Если лайка не стоит, сработает этот метод
   _handleClickLike(evt) {
     const myLike = this._dataLikes.some((item) => {
-      return item._id === "5346a78775339fb359a1af5c"
+      return item._id === "5346a78775339fb359a1af5c";
     });
     if (!myLike) {
       this.handleClickLike(this._id, evt);
-      console.log('Отправился запрос на лайк')
     }
   }
 
   //Если лайк есть, сработает этот метод
   _handleDeleteLike(evt) {
     const myLike = this._dataLikes.some((item) => {
-      return item._id === "5346a78775339fb359a1af5c"
+      return item._id === "5346a78775339fb359a1af5c";
     });
     if (myLike) {
       this.handleDeleteLike(this._id, evt);
-      console.log('Отправился запрос на удаление лайка')
     }
   }
 
@@ -106,19 +97,18 @@ export class Card {
   }
 
   //функция, проверяющая мои лайки при загрузке и окрашивающая их.
-  _ifMyLike () {
+  _ifMyLike() {
     const myLike = this._dataLikes.some((item) => {
-      return item._id === "5346a78775339fb359a1af5c"
+      return item._id === "5346a78775339fb359a1af5c";
     });
     if (myLike) {
       this._buttonLike.classList.add("element__vector_active");
     }
   }
 
-  //Счетчик данных и изменятель 
-    counter(amount, dataLikes) {
-      this._likeSpan.textContent = amount;
-      this._dataLikes = dataLikes;
-    }
-
+  //Счетчик данных и изменятель
+  counter(amount, dataLikes) {
+    this._likeSpan.textContent = amount;
+    this._dataLikes = dataLikes;
+  }
 }

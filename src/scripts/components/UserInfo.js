@@ -18,5 +18,3 @@ export default class UserInfo {
     this._profileText.textContent = description; //заполняем Описание на странице данными из поля описания
   }
 }
-
-

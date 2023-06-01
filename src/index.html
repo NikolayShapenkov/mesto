@@ -8,21 +8,23 @@
   </head>
   <body class="page preload">
     <header class="header">
-      <img class="header__logo" src="<%=require('./image/logo.svg')%>" alt="Логотип" />
+      <img
+        class="header__logo"
+        src="<%=require('./image/logo.svg')%>"
+        alt="Логотип"
+      />
     </header>
 
     <main class="content">
       <section class="profile">
         <div class="profile__info">
           <div class="profile__image-container">
-
             <div class="profile__conainer-hover">
-            <!--<img src="<%=require('./image/VectorprofileNew.svg')%>" alt="иконка при наведении" class="profile__hover">-->
-            <img
-              src="<%=require('./image/profile__image.jpg')%>"
-              alt="аватарка"
-              class="profile__image"
-            />
+              <img
+                src="<%=require('./image/profile__image.jpg')%>"
+                alt="аватарка"
+                class="profile__image"
+              />
             </div>
           </div>
           <div class="profile__texts">
@@ -61,13 +63,10 @@
               <div class="element__texts">
                 <h2 class="element__text">Текст в темплейте</h2>
 
-
                 <div class="elements__like-container">
                   <button class="element__vector" type="button"></button>
                   <span class="element__span">2</span>
                 </div>
-
-
               </div>
             </li>
           </template>
@@ -75,25 +74,22 @@
           <template class="element__template element__template_others">
             <li class="element">
               <div class="element__image-container">
-                <img src="<%=require('./image/elem__img_Karac.jpg')%>" alt="Картинка, вставленная пользователем"
-                  class="element__image" />
+                <img
+                  src="<%=require('./image/elem__img_Karac.jpg')%>"
+                  alt="Картинка, вставленная пользователем"
+                  class="element__image"
+                />
               </div>
               <div class="element__texts">
                 <h2 class="element__text">Текст в темплейте</h2>
-          
-          
+
                 <div class="elements__like-container">
                   <button class="element__vector" type="button"></button>
                   <span class="element__span">2</span>
                 </div>
-          
-          
               </div>
             </li>
           </template>
-
-
-          
         </ul>
       </section>
     </main>
@@ -198,7 +194,11 @@
       <div class="popup-image__container">
         <button class="popup__close popup-image__close" type="button"></button>
         <div class="popup-image__container-picture">
-          <img src="<%=require('./image/Image.png')%>" alt="" class="popup-image__picture" />
+          <img
+            src="<%=require('./image/Image.png')%>"
+            alt=""
+            class="popup-image__picture"
+          />
         </div>
         <p class="popup-image__text">Карачаево-Черкессия</p>
       </div>
@@ -220,12 +220,21 @@
   <div class="popup__container">
     <button class="popup__close" type="button"></button>
     <h2 class="popup__header">Обновить аватар</h2>
-    <form class="popup__form" name="data-changing" novalidate>
+    <form class="popup__form popupAvatar__form" name="data-changing" novalidate>
       <fieldset class="popup__profile-info">
-        <input id="name-input" class="popup__field popup__field_type_name" type="text" required minlength="2"
-          maxlength="40" name="name" placeholder="Жак-Ив Кусто" value="Жак-Ив Кусто" />
+        <input
+          id="name-input"
+          class="popup__field popup__field_type_name"
+          required
+          type="url"
+          name="link"
+          placeholder="Вставьте ссылку на аватарку"
+          value=""
+        />
         <div class="popup__input-error-container">
-          <span class="name-input-error popup__input-error">Поле для ошибки в первом инпуте</span>
+          <span class="name-input-error popup__input-error"
+            >Поле для ошибки в первом инпуте</span
+          >
         </div>
       </fieldset>
       <button type="submit" class="popup__save">Сохранить</button>

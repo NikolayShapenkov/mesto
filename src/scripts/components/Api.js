@@ -1,46 +1,49 @@
 export default class Api {
   constructor(options) {
-    this._requestUrl = options.baseUrl; //"https://nomoreparties.co/v1/cohort-66/users/me"
+    this._requestUrl = options.baseUrl;
     this._headers = options.headers;
-    this._passkey = options.headers.authorization;
+    this._passkey = options.password;
+  }
+
+  //Проверка статуса
+  _chekStatusRes(res) {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
   }
 
   //Метод для запроса инф-ции о пользователе на сервер
   getUserDataApi() {
     return fetch("https://nomoreparties.co/v1/cohort-66/users/me", {
       headers: {
-        authorization: "b462be91-a64a-47db-8f1b-d1a2e0f5554a",
+        authorization: `${this._passkey}`,
       },
-    });
+    }).then(this._chekStatusRes);
   }
 
   //Запрашиваем массив карточек и вставляем их в разметку
   getDataCards() {
-
-    //return fetch("https://mesto.nomoreparties.co/v1/cohort-66/cards", {
-        
-        //console.log('ЗДЕСЬ СРАБОТАЛО?')
     return fetch(`${this._requestUrl}cards`, {
       headers: {
-        authorization: "b462be91-a64a-47db-8f1b-d1a2e0f5554a",
+        authorization: `${this._passkey}`,
       },
-    });
+    }).then(this._chekStatusRes);
   }
 
   // Редактируем данные профиля на сервер
   loadingDataProfile(dataUser) {
     return fetch(`${this._requestUrl}users/me`, {
-      //return fetch("https://mesto.nomoreparties.co/v1/cohort-66/users/me", {  
       method: "PATCH",
       headers: {
-        authorization: "b462be91-a64a-47db-8f1b-d1a2e0f5554a",
-        "Content-Type": "application/json",
+        authorization: `${this._passkey}`,
+        "Content-Type": `${this._headers}`,
       },
       body: JSON.stringify({
         name: dataUser.name,
         about: dataUser.description,
       }),
-    });
+    }).then(this._chekStatusRes);
   }
 
   //Загружаем карточку на cервер
@@ -48,14 +51,14 @@ export default class Api {
     return fetch(`${this._requestUrl}cards`, {
       method: "POST",
       headers: {
-        authorization: "b462be91-a64a-47db-8f1b-d1a2e0f5554a",
-        "Content-Type": "application/json",
+        authorization: `${this._passkey}`,
+        "Content-Type": `${this._headers}`,
       },
       body: JSON.stringify({
         name: dataCards.name,
         link: dataCards.link,
       }),
-    })
+    }).then(this._chekStatusRes);
   }
 
   //Запрос на удаление карточки
@@ -63,107 +66,54 @@ export default class Api {
     return fetch(`https://mesto.nomoreparties.co/v1/cohort-66/cards/${_id}`, {
       method: "DELETE",
       headers: {
-        authorization: "b462be91-a64a-47db-8f1b-d1a2e0f5554a",
-        "Content-Type": "application/json",
-      }
-    
-    })
+        authorization: `${this._passkey}`,
+        "Content-Type": `${this._headers}`,
+      },
+    }).then(this._chekStatusRes);
   }
 
   //Запрос на лайк карточки
   getAddLike(_id) {
-    return fetch(`https://mesto.nomoreparties.co/v1/cohort-66/cards/${_id}/likes`, {
-      method: "PUT",
-      headers: {
-        authorization: "b462be91-a64a-47db-8f1b-d1a2e0f5554a",
-        "Content-Type": "application/json",
+    return fetch(
+      `https://mesto.nomoreparties.co/v1/cohort-66/cards/${_id}/likes`,
+      {
+        method: "PUT",
+        headers: {
+          authorization: `${this._passkey}`,
+          "Content-Type": `${this._headers}`,
+        },
       }
-    })
+    ).then(this._chekStatusRes);
   }
 
   //Запрос на снятие лайка карточки
   getDeleteLike(_id) {
-    return fetch(`https://mesto.nomoreparties.co/v1/cohort-66/cards/${_id}/likes`, {
-      method: "DELETE",
-      headers: {
-        authorization: "b462be91-a64a-47db-8f1b-d1a2e0f5554a",
-        "Content-Type": "application/json",
+    return fetch(
+      `https://mesto.nomoreparties.co/v1/cohort-66/cards/${_id}/likes`,
+      {
+        method: "DELETE",
+        headers: {
+          authorization: `${this._passkey}`,
+          "Content-Type": `${this._headers}`,
+        },
       }
-    })
+    ).then(this._chekStatusRes);
   }
-  
+
   //Запрос на добавление аватара
   getAddAvatar(avatarURL) {
-    return fetch(`https://mesto.nomoreparties.co/v1/cohort-66/users/me/avatar`, {
-      method: "PATCH",
-      headers: {
-        authorization: "b462be91-a64a-47db-8f1b-d1a2e0f5554a",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        avatar: avatarURL,
-      })
-    })
+    return fetch(
+      `https://mesto.nomoreparties.co/v1/cohort-66/users/me/avatar`,
+      {
+        method: "PATCH",
+        headers: {
+          authorization: `${this._passkey}`,
+          "Content-Type": `${this._headers}`,
+        },
+        body: JSON.stringify({
+          avatar: avatarURL,
+        }),
+      }
+    ).then(this._chekStatusRes);
   }
-
 }
-
-
-
-
-
-
-//Функция для запроса инф-ции о пользователе на сервер
-/*export const UserRequest = () => {
-  return fetch("https://nomoreparties.co/v1/cohort-66/users/me", {
-    headers: {
-      authorization: "b462be91-a64a-47db-8f1b-d1a2e0f5554a",
-    },
-  });
-};
-
-//Функция для запроса карточек к сервера
-export const requestDataCards = () => {
-  return fetch("https://mesto.nomoreparties.co/v1/cohort-66/cards", {
-    headers: {
-      authorization: "b462be91-a64a-47db-8f1b-d1a2e0f5554a",
-    },
-  });
-};
-
-//Функция для отправки данных профиля на сервер
-export const loadingDataProfile = (dataUser) => {
-  return fetch("https://mesto.nomoreparties.co/v1/cohort-66/users/me", {
-    method: "PATCH",
-    headers: {
-      authorization: "b462be91-a64a-47db-8f1b-d1a2e0f5554a",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      name: dataUser.name,
-      about: dataUser.description,
-    }),
-  });
-};
-
-//Функция для отправки данных карточки на сервер
-export const loadingDataCards = (dataCards) => {
-  return fetch("https://mesto.nomoreparties.co/v1/cohort-66/cards", {
-    method: "POST",
-    headers: {
-      authorization: "b462be91-a64a-47db-8f1b-d1a2e0f5554a",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      name: dataCards.name,
-      link: dataCards.link,
-    }),
-  });
-};
-
-/*const option = {
-    baseUrl: "https://nomoreparties.co/v1/cohort-66/users/",
-    headers: "",
-    password: "b462be91-a64a-47db-8f1b-d1a2e0f5554a",
-}*/
-

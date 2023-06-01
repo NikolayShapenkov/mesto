@@ -6,6 +6,7 @@ export default class PopupWithForm extends Popup {
     this._submitForm = handleSubmitForm;
     this._inputsList = this._popupElement.querySelectorAll(".popup__field");
     this._form = this._popupElement.querySelector(".popup__form");
+    this._buttonSubmit = this._form.querySelector(".popup__save"); //Кнопка саббмита в форме
   }
 
   close() {
@@ -24,8 +25,9 @@ export default class PopupWithForm extends Popup {
   }
 
   _handleSubmitForm = (evt) => {
+    console.log(this._buttonSubmit);
     evt.preventDefault();
-    this._submitForm(this._getInputValues());
+    this._submitForm(this._getInputValues(), this._buttonSubmit); //пробрасываем кнопку
   };
 
   setEventListeners() {
