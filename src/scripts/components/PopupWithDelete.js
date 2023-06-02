@@ -6,16 +6,15 @@ export default class PopupWithDelete extends Popup {
     this._submitForm = handleSubmitForm;
   }
 
-  open = (_id, buttonDeleteCard, cardCloneElement) => {
+  open = (_id, card) => {
     this._id = _id;
-    this._buttonDeleteCard = buttonDeleteCard;
-    this._cardCloneElement = cardCloneElement;
+    this.card = card;
     super.open();
   };
 
   _handleSubmitForm = (evt) => {
     evt.preventDefault();
-    this._submitForm(this._id, this._buttonDeleteCard, this._cardCloneElement);
+    this._submitForm(this._id, this.card);
   };
 
   setEventListeners() {

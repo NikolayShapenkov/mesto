@@ -1,15 +1,15 @@
 // Новый класс для отрисовки карточки и вставки в разметку
 export default class Section {
-  constructor({ items, renderer }, selector) {
-    this._initialArray = items; //объект
+  constructor({ renderer }, selector) {
     this._renderer = renderer; // функция для renderCards
     this._container = document.querySelector(selector); //Куда вставляем готовую разметку
   }
 
   //Отрисовка всех элементов
-  renderCards() {
-    this._initialArray.forEach((item) => {
-      this._renderer(item);
+  renderCards(items, myID) {
+    items.reverse().forEach((item) => {
+      const _id = item._id;
+      this._renderer(item, _id, myID);
     });
   }
 

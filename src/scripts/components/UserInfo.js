@@ -1,3 +1,5 @@
+import { avatarImg } from "../utils/constants.js";
+
 export default class UserInfo {
   constructor({ profileNameSelector, profileDescriptionSelector }) {
     this._profileTitle = document.querySelector(profileNameSelector);
@@ -16,5 +18,10 @@ export default class UserInfo {
   setUserInfo(firtname, description) {
     this._profileTitle.textContent = firtname; //заполняем имя на странице данными из поля имени
     this._profileText.textContent = description; //заполняем Описание на странице данными из поля описания
+  }
+
+  //Принимает ссылку на аватар и вставляет на страницу
+  setUserAvatar(src) {
+    avatarImg.src = src;
   }
 }

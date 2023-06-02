@@ -1,6 +1,5 @@
 import "./index.css"; // добавьте импорт главного файла стилей
 import {
-  initialCards,
   formValidationConfig,
   selectorPopupAddCards,
   profileDescriptionSelector,
@@ -15,7 +14,6 @@ import {
   fieldDescriptionInput,
   avatar,
   popupNewAvatar,
-  avatarImg,
   option,
 } from "../scripts/utils/constants.js";
 import { FormValidator } from "../scripts/components/FormValidator.js";
@@ -31,12 +29,10 @@ import Section from "../scripts/components/Section.js";
 import PopupWithForm from "../scripts/components/PopupWithForm.js";
 import UserInfo from "../scripts/components/UserInfo.js";
 import PopupWithImage from "../scripts/components/PopupWithImage.js";
-import Popup from "../scripts/components/Popup.js";
 import PopupWithDelete from "../scripts/components/PopupWithDelete";
 import Api from "../scripts/components/Api.js";
 
 export const popupImageText = popupLookCard.querySelector(".popup-image__text"); //Картинка в попапе для просмотра фото
-
 window.addEventListener("load", function () {
   page.classList.remove("preload");
 }); // удаляю класс preload после полной загрузки страницы, чтобы анимация всплывающих попапов работала
@@ -44,12 +40,12 @@ window.addEventListener("load", function () {
 //Создаем экзкмпляр класса для формы подтвекрждениия удаления
 const popupDelete = new PopupWithDelete({
   popupSelector: selectorPopupDelete,
-  handleSubmitForm: (_id, buttonDeleteCard, cardCloneElement) => {
+  handleSubmitForm: (_id, card) => {
     api
       .getDeleteCardById(_id)
       .then((result) => {
+        card.handleClickButtonDelete();
         popupDelete.close();
-        handleClickButtonDelete(buttonDeleteCard, cardCloneElement);
       })
       .catch((error) => {
         console.log(error);
@@ -66,7 +62,8 @@ const popupAddAvatar = new PopupWithForm({
     api
       .getAddAvatar(inputValues.link)
       .then(() => {
-        avatarImg.src = inputValues.link;
+        userInfo.setUserAvatar(inputValues.link);
+        popupAddAvatar.close();
       })
       .catch((error) => {
         console.log(error);
@@ -74,7 +71,6 @@ const popupAddAvatar = new PopupWithForm({
       .finally((res) => {
         renderLoading(buttonSubmit, "Сохранить");
       });
-    popupAddAvatar.close();
   },
 });
 
@@ -85,17 +81,6 @@ avatar.addEventListener("click", () => {
   popupAddAvatar.open();
   formElementAvatarValidator.resetValidation();
 });
-
-//функция удаления карточки при Саббмите удаления
-const handleClickButtonDelete = (buttonDeleteCard, cardCloneElement) => {
-  buttonDeleteCard.closest(".element");
-  cardCloneElement.remove();
-};
-
-//Обработчик клика на УДАЛИТЬ
-function handleButtonDeleteClick(_id, buttonDeleteCard, cardCloneElement) {
-  popupDelete.open(_id, buttonDeleteCard, cardCloneElement);
-}
 
 //Функция для открытия карты при передаче в класс Card
 const popupImage = new PopupWithImage({ popupSelector: selectorPopupImage });
@@ -115,7 +100,7 @@ const popupEditProfile = new PopupWithForm({
       .loadingDataProfile(inputValues)
       .then((inputValues) => {
         userInfo.setUserInfo(inputValues.name, inputValues.about);
-        //renderLoading(false, knopka, "Сохранение...", "Сохранить");
+        popupEditProfile.close();
       })
       .catch((error) => {
         console.log(error);
@@ -123,7 +108,6 @@ const popupEditProfile = new PopupWithForm({
       .finally((res) => {
         renderLoading(buttonSubmit, "Сохранить");
       });
-    popupEditProfile.close();
   },
 });
 
@@ -153,7 +137,10 @@ const popupAddCardNew = new PopupWithForm({
     api
       .loadingDataCards(inputValues)
       .then((inputValues) => {
-        renderCard([inputValues], inputValues.owner._id);
+        newCard.addItem(
+          creatCard(inputValues, inputValues.owner._id, inputValues.owner._id)
+        );
+        popupAddCardNew.close();
       })
       .catch((error) => {
         console.log(error);
@@ -162,7 +149,6 @@ const popupAddCardNew = new PopupWithForm({
         renderLoading(buttonSubmit, "Создать");
       });
     formElementCardValidator.disableSubmitButton();
-    popupAddCardNew.close();
   },
 });
 
@@ -174,55 +160,52 @@ aboutButtonCard.addEventListener("click", (evt) => {
   formElementCardValidator.resetValidation();
 });
 
-// Функция для создания карточек и вставки из формы
-function renderCard(arrayAddNewCards, ownerId) {
-  arrayAddNewCards.reverse();
-  const NewCard = new Section(
-    {
-      items: arrayAddNewCards,
-      renderer: (item) => {
-        const card = new Card({
-          data: item,
-          temlateSelector: ".element__template",
-          handleCardClick: handleCardClick,
-          handleButtonDeleteClick: handleButtonDeleteClick,
-          handleClickLike: (_id, evt) => {
-            api
-              .getAddLike(_id)
-              .then((result) => {
-                let quantityLike = result.likes.length; //вычисляем сумму лайков из получ данных
-                evt.target.classList.toggle("element__vector_active");
-                const dataLikes = result.likes;
-                card.counter(quantityLike, dataLikes);
-              })
-              .catch((error) => {
-                console.log(error);
-              });
-          },
-          handleDeleteLike: (_id, evt) => {
-            api
-              .getDeleteLike(_id)
-              .then((result) => {
-                let quantityLike = result.likes.length; //вычисляем сумму лайков из получ данных
-                evt.target.classList.toggle("element__vector_active");
-                const dataLikes = result.likes;
-                card.counter(quantityLike, dataLikes);
-              })
-              .catch((error) => {
-                console.log(error);
-              });
-          },
-        });
-        // Создаём карточку и возвращаем наружу
-        const cardElement = card.generateNewCard();
-        NewCard.addItem(cardElement);
-      },
+// ИЗ РАЗДЕЛЕННОЙ ФУНКЦИИ. Забирает объект карточки и возвращает готовую карту для вставки
+const creatCard = (item, _id, myID) => {
+  const card = new Card({
+    data: item,
+    temlateSelector: ".element__template",
+    handleCardClick: handleCardClick,
+    handleButtonDeleteClick: (_id, card) => {
+      popupDelete.open(_id, card);
     },
-    cardListSelector
-  );
+    handleClickLike: (_id, evt) => {
+      api
+        .getAddLike(_id)
+        .then((res) => {
+          evt.target.classList.toggle("element__vector_active");
+          card.counterOnklick(res);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    handleDeleteLike: (_id, evt) => {
+      api
+        .getDeleteLike(_id)
+        .then((result) => {
+          let quantityLike = result.likes.length; //вычисляем сумму лайков из получ данных
+          evt.target.classList.toggle("element__vector_active");
+          const dataLikes = result.likes;
+          card.counter(quantityLike, dataLikes);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    myId: myID,
+  });
+  return card.generateNewCard();
+};
 
-  NewCard.renderCards();
-}
+const newCard = new Section(
+  {
+    renderer: (item, _id, myID) => {
+      newCard.addItem(creatCard(item, _id, myID));
+    },
+  },
+  cardListSelector
+);
 
 //Экземпляр для валидации формы профиля
 const formProfilValidator = new FormValidator(
@@ -248,26 +231,16 @@ formElementAvatarValidator.enableValidation();
 //Создаем экземпляр класса Api
 const api = new Api(option);
 
-//Запроса инф-ции о пользователе на сервер при загрузке страницы
-api
-  .getUserDataApi()
-  .then((data) => {
+Promise.all([api.getDataCards(), api.getUserDataApi()])
+  .then(([result, data]) => {
     userInfo.setUserInfo(data.name, data.about); // вызываем метод из класса setUserInfo, вставляем данные с сервера на страницу
-    document.querySelector(".profile__image").src = data.avatar; //вставляем фото профиля с сервера
-  })
-  .catch((error) => {
-    console.log(error);
-  });
-
-//Запрашиваем массив карточек и вставляем их в разметку
-api
-  .getDataCards()
-  .then((result) => {
+    userInfo.setUserAvatar(data.avatar);
+    const myID = data._id;
     const cards = result;
-    renderCard(cards); // для вставки используем готовую функцию
+    newCard.renderCards(cards, myID); // для вставки используем готовую функцию
   })
-  .catch((error) => {
-    console.log(error);
+  .catch((err) => {
+    console.log(err);
   });
 
 //Функция для улучшения UX
