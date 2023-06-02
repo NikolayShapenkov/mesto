@@ -247,3 +247,5 @@ Promise.all([api.getDataCards(), api.getUserDataApi()])
 function renderLoading(buttonSubmit, messageText) {
   buttonSubmit.textContent = messageText;
 }
+
+//Сергей, спасибо за ревью)))

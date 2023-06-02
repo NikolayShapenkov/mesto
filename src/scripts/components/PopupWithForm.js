@@ -25,7 +25,6 @@ export default class PopupWithForm extends Popup {
   }
 
   _handleSubmitForm = (evt) => {
-    console.log(this._buttonSubmit);
     evt.preventDefault();
     this._submitForm(this._getInputValues(), this._buttonSubmit); //пробрасываем кнопку
   };
